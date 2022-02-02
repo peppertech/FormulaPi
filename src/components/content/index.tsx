@@ -61,13 +61,18 @@ export function Content() {
   ];
   return (
     <div class="">
+      {/* outer panel styling and sizing */}
       <div class="oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard">
         <div style="margin-bottom:20px;">
           Current Frame({frameRate}/sec): {frameNum}{" "}
         </div>
+        {/* Parent container for top row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+          {/* Child container for first column of elements */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+            {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Top half of the column with bottom spacing */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
                   class="f1-meter-large"
@@ -81,6 +86,7 @@ export function Content() {
                   metricLabel={{position:'center', style:{color:'black',fontSize:'2rem'}}}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
+              {/* Bottom half of the first column */}
               <div class="oj-flex-item">
                 <div class="oj-flex-item">Speed: {speed}</div>
                 <div class="oj-flex-item">
@@ -98,11 +104,15 @@ export function Content() {
               </div>
             </div>
           </div>
+          {/* Center column of elements */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+            {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Top half of center column */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <img src="styles/images/F1.png" class={steeringStyles} />
               </div>
+              {/* Bottom half of center column */}
               <div class="oj-flex-item">
                 Gear:{" " + gear}
                 <oj-rating-gauge
@@ -118,8 +128,11 @@ export function Content() {
               <div class="oj-flex-item">Stear: {" " + steer}</div>
             </div>
           </div>
+          {/* Third column of elements */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+            {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Top half of column */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
                   class="f1-meter-large"
@@ -135,6 +148,7 @@ export function Content() {
                   referenceLines={referenceLines}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
+              {/* Bottom half of column elements */}
               <div class="oj-flex-item">
                 <div>RPM: {rpm}</div>
                 <div>Testing</div>
