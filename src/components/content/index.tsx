@@ -69,34 +69,19 @@ export function Content() {
         {/* Parent container for top row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
           {/* Child container for first column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of the column with bottom spacing */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
-                <oj-status-meter-gauge
-                  class="f1-meter-large"
-                  min={0}
-                  max={350}
-                  value={speed}
-                  startAngle={180}
-                  labelledBy="startAngle"
-                  angleExtent={180}
-                  innerRadius={0.7}
-                  metricLabel={{position:'center', style:{color:'black',fontSize:'2rem'}}}
-                  orientation="circular"></oj-status-meter-gauge>
-              </div>
-              {/* Bottom half of the first column */}
-              <div class="oj-flex-item">
-                <div class="oj-flex-item">Speed: {speed}</div>
                 <div class="oj-flex-item">
-                  Throttle:{" "}
+                  <span class="oj-typography-subheading-md">Throttle </span>
                   <span
                     class={throttle ? "on" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"></span>
                 </div>
                 <div class="oj-flex-item">
-                  Brake:{" "}
+                <span class="oj-typography-subheading-md">Brake </span>
                   <span
                     class={brake ? "off" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"></span>
@@ -105,55 +90,80 @@ export function Content() {
             </div>
           </div>
           {/* Center column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of center column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
-                <img src="styles/images/F1.png" class={steeringStyles} />
-              </div>
-              {/* Bottom half of center column */}
-              <div class="oj-flex-item">
-                Gear:{" " + gear}
-                <oj-rating-gauge
-                  value={gear}
-                  labelledBy="maxValue"
-                  selectedState={{ shape: "rectangle" }}
-                  hoverState={{ shape: "rectangle" }}
-                  unselectedState={{ shape: "dot" }}
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom position-center">
+                <oj-status-meter-gauge
+                  class="f1-meter-lg"
                   min={0}
-                  max={8}
-                  size="medium"></oj-rating-gauge>
+                  max={350}
+                  value={speed}
+                  startAngle={180}
+                  labelledBy="startAngle"
+                  angleExtent={180}
+                  metricLabel={{
+                    position: "center",
+                    style: { color: "black", fontSize: "3.5rem", fontFamily: 'sans-comic' }
+                  }}
+                  orientation="circular"></oj-status-meter-gauge>
               </div>
-              <div class="oj-flex-item">Stear: {" " + steer}</div>
             </div>
           </div>
           {/* Third column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of column */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
-                  class="f1-meter-large"
+                  class="f1-meter-md"
                   min={0}
                   max={15000}
                   value={rpm}
                   startAngle={180}
                   labelledBy="startAngle"
                   angleExtent={180}
-                  innerRadius={0.7}
-                  metricLabel={{position:'center', style:{color:'black',fontSize:'2rem'}}}
+                  metricLabel={{
+                    position: "outsidePlotArea",
+                    style: { color: "black", fontSize: "1.5rem", fontFamily: 'sans-comic' }
+                  }}
                   thresholds={thresholdValues}
                   referenceLines={referenceLines}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
+            </div>
+          </div>
+        </div>
+        {/* Parent container for bottom row of elements */}
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+          {/* Child container for first column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Stack elements in this column so that they layout vertically */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of the first column */}
+              <div class="oj-flex-item">TBD</div>
+            </div>
+          </div>
+          {/* Center column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of center column */}
+              <div class="oj-flex-item">
+                <img src="styles/images/F1.png" class={steeringStyles} />
+              </div>
+            </div>
+          </div>
+          {/* Third column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of column elements */}
               <div class="oj-flex-item">
-                <div>RPM: {rpm}</div>
-                <div>Testing</div>
-                <div>Testing</div>
-                </div>
+                <div>TBD</div>
+              </div>
             </div>
           </div>
         </div>

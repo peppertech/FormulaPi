@@ -39,14 +39,19 @@ html[dir="rtl"] .demo-oracle-icon {
   content: url("images/avatar_24px.png");
 }
 
-.f1-meter-large {
+.f1-meter-lg {
+  height: 14rem;
+  width: 100%;
+}
+
+.f1-meter-md {
   height: 8rem;
 }
 
 .f1-dashboard {
   width: 98vw;
   height: calc(98vh - 53px);
-  margin:auto;
+  margin: auto;
 }
 .on {
   background-color: green;
@@ -77,6 +82,16 @@ html[dir="rtl"] .demo-oracle-icon {
   transition: 0.5s ease-in-out;
 }
 
+.center-sizing {
+  min-width: 50%;
+}
+.side-sizing {
+  max-width: 25%;
+}
+.position-center {
+  margin: auto;
+}
+
 @media (-webkit-min-device-pixel-ratio: 1.5),
   (min-resolution: 144dpi),
   (min-resolution: 1.5dppx) {
@@ -92,5 +107,11 @@ html[dir="rtl"] .demo-oracle-icon {
     width: 95vw;
     height: calc(98vh - 53px);
     margin: auto;
+  }
+  .center-sizing {
+    min-width: none;
+  }
+  .side-sizing {
+    max-width: none;
   }
 }
