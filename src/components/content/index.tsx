@@ -152,7 +152,7 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of center column */}
               <div class="oj-flex-item">
-                <img src="styles/images/F1.png" class={steeringStyles} />
+                <img src="styles/images/SW.png" class={steeringStyles} />
               </div>
             </div>
           </div>
