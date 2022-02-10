@@ -1,5 +1,5 @@
 {
-  "use": "local",
+  "use": "cdn",
   "cdns": {
     "jet": {
       "prefix": "https://static.oracle.com/cdn/jet/11.1.0/default/js",
