@@ -2,6 +2,7 @@
 /node_modules
 /bower_components
 /web
+/dist
 /staged-themes
 /themes
 /jaftmp@
