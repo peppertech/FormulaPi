@@ -1,0 +1,117 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+:root {
+  --oj-statusmeter-gauge-circular-md-size: auto;
+}
+.demo-oracle-icon {
+  width: 137px;
+  height: 18px;
+}
+
+.demo-oracle-icon:before {
+  content: url("images/oracle_logo.svg");
+}
+
+html:not([dir="rtl"]) .demo-oracle-icon {
+  padding-right: 4px;
+}
+
+html[dir="rtl"] .demo-oracle-icon {
+  padding-left: 4px;
+}
+
+.demo-oracle-icon:before {
+  display: inline;
+}
+
+.demo-appheader-avatar {
+  width: 24px;
+  height: 24px;
+}
+
+.demo-appheader-avatar:before {
+  content: url("images/avatar_24px.png");
+}
+
+.f1-meter-lg {
+  height: 14rem;
+  width: 100%;
+}
+
+.f1-meter-md {
+  height: 8rem;
+}
+
+.f1-dashboard {
+  width: 98vw;
+  height: calc(98vh - 53px);
+  margin: auto;
+}
+.on {
+  background-color: green;
+}
+.off {
+  background-color: red;
+}
+.clear {
+  background-color: auto;
+}
+.steering-size {
+  height: 200px;
+  width: 200px;
+  display: block;
+  margin: auto;
+}
+
+.steer-straight {
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+}
+.steer-left {
+  transform: rotate(-0.125turn);
+  transition: 0.5s ease-in-out;
+}
+.steer-right {
+  transform: rotate(30deg);
+  transition: 0.5s ease-in-out;
+}
+
+.center-sizing {
+  min-width: 50%;
+}
+.side-sizing {
+  max-width: 25%;
+}
+.position-center {
+  margin: auto;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5),
+  (min-resolution: 144dpi),
+  (min-resolution: 1.5dppx) {
+  .demo-appheader-avatar:before {
+    content: url("images/avatar_24px_2x.png");
+    -webkit-transform: translate(-25%, -25%) scale(0.5);
+    transform: translate(-25%, -25%) scale(0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  .f1-dashboard {
+    width: 95vw;
+    height: calc(98vh - 53px);
+    margin: auto;
+  }
+  .center-sizing {
+    min-width: none;
+  }
+  .side-sizing {
+    max-width: none;
+  }
+}
