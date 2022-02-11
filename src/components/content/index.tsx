@@ -139,33 +139,33 @@ export function Content() {
         {/* Parent container for bottom row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
           {/* Child container for first column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          {/* <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing"> */}
             {/* Stack elements in this column so that they layout vertically */}
-            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+            {/* <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column"> */}
               {/* Bottom half of the first column */}
-              <div class="oj-flex-item">TBD</div>
-            </div>
-          </div>
+              {/* <div class="oj-flex-item">TBD</div> */}
+            {/* </div> */}
+          {/* </div> */}
           {/* Center column of elements */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of center column */}
               <div class="oj-flex-item">
-                <img src="styles/images/F1.png" class={steeringStyles} />
+                <img src="styles/images/sw.png" class={steeringStyles} />
               </div>
             </div>
           </div>
           {/* Third column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          {/* <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing"> */}
             {/* Force the content into a vertical column layout  */}
-            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+            {/* <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column"> */}
               {/* Bottom half of column elements */}
-              <div class="oj-flex-item">
-                <div>TBD</div>
-              </div>
-            </div>
-          </div>
+              {/* <div class="oj-flex-item"> */}
+                {/* <div>TBD</div> */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* </div> */}
         </div>
       </div>
     </div>

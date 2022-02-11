@@ -23,7 +23,7 @@ html:not([dir="rtl"]) .demo-oracle-icon {
 }
 
 html[dir="rtl"] .demo-oracle-icon {
-  padding-left: 4px;
+  padding-left: 0.2px;
 }
 
 .demo-oracle-icon:before {
@@ -40,8 +40,8 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .f1-meter-lg {
-  height: 14rem;
-  width: 100%;
+  height: 70%;
+  width: 70%;
 }
 
 .f1-meter-md {
@@ -63,8 +63,8 @@ html[dir="rtl"] .demo-oracle-icon {
   background-color: auto;
 }
 .steering-size {
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 500px;
   display: block;
   margin: auto;
 }
