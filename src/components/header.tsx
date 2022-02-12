@@ -33,7 +33,7 @@ export class Header extends Component<Props, State> {
   render(props: Readonly<Props>, state: Readonly<State>): ComponentChild {
     return (
       <header role="banner" class="oj-web-applayout-header">
-        <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
+        <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center header-bg">
           <div class="oj-flex-bar-middle oj-sm-align-items-baseline">
             <span
               role="img"

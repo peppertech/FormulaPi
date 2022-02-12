@@ -6,8 +6,8 @@ import "ojs/ojgauge";
 export function Content() {
   const [frameNum, setFrameNum] = useState(0);
   const [speed, setSpeed] = useState(0);
-  const [throttle, setThrottle] = useState("");
-  const [brake, setBrake] = useState("");
+  const [throttle, setThrottle] = useState(0);
+  const [brake, setBrake] = useState(0);
   const [gear, setGear] = useState(0);
   const [rpm, setRPM] = useState(0);
   const [steer, setSteer] = useState(0);
@@ -45,6 +45,10 @@ export function Content() {
         i++;
       } else {
         clearInterval(dataFlow);
+        setBrake(0);
+        setThrottle(0);
+        setSpeed(0);
+        setRPM(0);
       }
     };
     const dataFlow = setInterval(throttleDataFlow, frameRate / 1000); // read the fastestlap data at one 18 frames per second.
@@ -53,17 +57,17 @@ export function Content() {
   const thresholdValues = [
     { max: 11500, color: "green" },
     { max: 13500, color: "orange" },
-    { max: 15000, color: "red" }
+    { max: 15000, color: "red" },
   ];
   const referenceLines = [
     { value: 11500, color: "orange" },
-    { value: 13500, color: "red" }
+    { value: 13500, color: "red" },
   ];
   return (
     <div class="">
       {/* outer panel styling and sizing */}
-      <div class="oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard">
-        <div style="margin-bottom:20px;">
+      <div class="oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
+        <div style="margin-bottom:20px; color:white">
           Current Frame({frameRate}/sec): {frameNum}{" "}
         </div>
         {/* Parent container for top row of elements */}
@@ -73,7 +77,7 @@ export function Content() {
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of the column with bottom spacing */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom throttle-container">
                 <div class="oj-flex-item">
                   <span class="oj-typography-subheading-md">Throttle </span>
                   <span
@@ -81,7 +85,7 @@ export function Content() {
                     style="display:inline-block;width:30px;height:1rem"></span>
                 </div>
                 <div class="oj-flex-item">
-                <span class="oj-typography-subheading-md">Brake </span>
+                  <span class="oj-typography-subheading-md">Brake </span>
                   <span
                     class={brake ? "off" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"></span>
@@ -94,7 +98,7 @@ export function Content() {
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of center column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom position-center">
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom position-center speed-container">
                 <oj-status-meter-gauge
                   class="f1-meter-lg"
                   min={0}
@@ -105,7 +109,11 @@ export function Content() {
                   angleExtent={180}
                   metricLabel={{
                     position: "center",
-                    style: { color: "black", fontSize: "3.5rem", fontFamily: 'sans-comic' }
+                    style: {
+                      color: "black",
+                      fontSize: "3.5rem",
+                      fontFamily: "sans-comic",
+                    },
                   }}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
@@ -116,7 +124,7 @@ export function Content() {
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Top half of column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom rpm-container">
                 <oj-status-meter-gauge
                   class="f1-meter-md"
                   min={0}
@@ -127,7 +135,11 @@ export function Content() {
                   angleExtent={180}
                   metricLabel={{
                     position: "outsidePlotArea",
-                    style: { color: "black", fontSize: "1.5rem", fontFamily: 'sans-comic' }
+                    style: {
+                      color: "black",
+                      fontSize: "1.5rem",
+                      fontFamily: "sans-comic",
+                    },
                   }}
                   thresholds={thresholdValues}
                   referenceLines={referenceLines}
@@ -137,13 +149,13 @@ export function Content() {
           </div>
         </div>
         {/* Parent container for bottom row of elements */}
-        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column oj-sm-align-items-center">
           {/* Child container for first column of elements */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of the first column */}
-              <div class="oj-flex-item">TBD</div>
+              <div class="oj-flex-item"></div>
             </div>
           </div>
           {/* Center column of elements */}
@@ -152,7 +164,7 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of center column */}
               <div class="oj-flex-item">
-                <img src="styles/images/SW.png" class={steeringStyles} />
+                <img src="styles/images/steering-white.png" alt="steering wheel" class={steeringStyles} />
               </div>
             </div>
           </div>
@@ -162,7 +174,7 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of column elements */}
               <div class="oj-flex-item">
-                <div>TBD</div>
+                <div></div>
               </div>
             </div>
           </div>

@@ -39,6 +39,10 @@ html[dir="rtl"] .demo-oracle-icon {
   content: url("images/avatar_24px.png");
 }
 
+.header-bg {
+  background-color: burlywood;
+}
+
 .f1-meter-lg {
   height: 14rem;
   width: 100%;
@@ -49,8 +53,8 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .f1-dashboard {
-  width: 98vw;
-  height: calc(98vh - 53px);
+  width: 1024px;
+  height: 600px; /* calc(98vh - 53px); */
   margin: auto;
 }
 .on {
@@ -63,8 +67,8 @@ html[dir="rtl"] .demo-oracle-icon {
   background-color: auto;
 }
 .steering-size {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   display: block;
   margin: auto;
 }
@@ -90,6 +94,33 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 .position-center {
   margin: auto;
+}
+
+.bg-fiber {
+  background: repeat url("images/fibres-texture-design_1100-99.webp");
+}
+
+.throttle-container {
+  background-color: whitesmoke;
+  border-radius: 5px;
+  height: 35%;
+  padding: 10px;
+  box-shadow: inset 0 0 5px #000000;
+}
+
+.speed-container {
+  background: orangered;
+  border-radius: 25%;
+  padding: 10px;
+  box-shadow: inset 0 0 5px #000000;
+}
+
+.rpm-container {
+  background-color: orangered;
+  border-radius: 25%;
+  height: 70%;
+  padding: 10px;
+  box-shadow: inset 0 0 5px #000000;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5),
