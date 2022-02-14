@@ -43,9 +43,9 @@ html[dir="rtl"] .demo-oracle-icon {
   height: 70%;
   width: 70%;
 }
-
+/* rpm */
 .f1-meter-md {
-  height: 8rem;
+  height: 5rem;
 }
 
 .f1-dashboard {
@@ -54,17 +54,17 @@ html[dir="rtl"] .demo-oracle-icon {
   margin: auto;
 }
 .on {
-  background-color: green;
+  background-color: #e3dbbf;
 }
 .off {
-  background-color: red;
+  background-color: #c74634;
 }
 .clear {
   background-color: auto;
 }
 .steering-size {
-  height: 300px;
-  width: 500px;
+  height: 150px;
+  width: 250px;
   display: block;
   margin: auto;
 }
@@ -82,11 +82,15 @@ html[dir="rtl"] .demo-oracle-icon {
   transition: 0.5s ease-in-out;
 }
 
+.bg-fiber {
+  background: repeat url("images/bg2.png");
+}
+
 .center-sizing {
   min-width: 50%;
 }
 .side-sizing {
-  max-width: 25%;
+  max-width: 15%;
 }
 .position-center {
   margin: auto;
