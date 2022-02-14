@@ -90,7 +90,7 @@ html[dir="rtl"] .demo-oracle-icon {
   min-width: 50%;
 }
 .side-sizing {
-  max-width: 15%;
+  max-width: 25%;
 }
 .position-center {
   margin: auto;
@@ -108,8 +108,8 @@ html[dir="rtl"] .demo-oracle-icon {
 
 @media (max-width: 480px) {
   .f1-dashboard {
-    width: 95vw;
-    height: calc(98vh - 53px);
+    width: 480px;
+    height: 600px;
     margin: auto;
   }
   .center-sizing {

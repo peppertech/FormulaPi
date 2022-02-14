@@ -102,7 +102,7 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
 
               {/* Top half of center column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom position-center">
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-5x-bottom position-center">
                 <oj-status-meter-gauge
                   class="f1-meter-lg"
                   min={0}
@@ -113,7 +113,7 @@ export function Content() {
                   angleExtent={180}
                   metricLabel={{
                     position: "center",
-                    style: { color: "black", fontSize: "3.5rem", fontFamily: 'sans-comic' }
+                    style: { color: '#f9f9f6' , fontSize: "3rem", fontFamily: 'sans-comic' }
                   }}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
@@ -200,7 +200,7 @@ export function Content() {
                   angleExtent={180}
                   metricLabel={{
                     position: "outsidePlotArea",
-                    style: { color: "black", fontSize: "1.5rem", fontFamily: 'sans-comic' }
+                    style: { color: '#f9f9f6', fontSize: "1.2rem", fontFamily: 'sans-comic' }
                   }}
                   thresholds={thresholdValues}
                   referenceLines={referenceLines}
