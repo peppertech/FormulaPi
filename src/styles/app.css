@@ -40,12 +40,23 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .f1-meter-lg {
-  height: 70%;
-  width: 70%;
+  height: 100%;
+  width: 100%;
 }
 /* rpm */
 .f1-meter-md {
   height: 5rem;
+}
+
+/* gearbox */
+.f1-meter-gear {
+  height: 5rem;
+}
+
+/* tires */
+.f1-meter-tire {
+  height: 60px;
+  width: 135px;
 }
 
 .f1-dashboard {

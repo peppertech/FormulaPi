@@ -75,24 +75,13 @@ export function Content() {
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
 
             {/* Stack elements in this column so that they layout vertically */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-
-              {/* Top half of the column with bottom spacing */}
-              {/* <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
-                <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md">Throttle </span>
-                  <span
-                    class={throttle ? "on" : "clear"}
-                    style="display:inline-block;width:30px;height:1rem"></span>
-                </div>
-                <div class="oj-flex-item">
-                <span class="oj-typography-subheading-md">Brake </span>
-                  <span
-                    class={brake ? "off" : "clear"}
-                    style="display:inline-block;width:30px;height:1rem"></span>
-                </div>
-              </div> */}
+              {/* Bottom half of the first column */}
+              <div class="oj-flex-item">1</div>
             </div>
+          </div>
           </div>
 
           {/* Center column of elements */}
@@ -102,21 +91,7 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
 
               {/* Top half of center column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-5x-bottom position-center">
-                <oj-status-meter-gauge
-                  class="f1-meter-lg"
-                  min={0}
-                  max={350}
-                  value={speed}
-                  startAngle={180}
-                  labelledBy="startAngle"
-                  angleExtent={180}
-                  metricLabel={{
-                    position: "center",
-                    style: { color: '#f9f9f6' , fontSize: "3rem", fontFamily: 'sans-comic' }
-                  }}
-                  orientation="circular"></oj-status-meter-gauge>
-              </div>
+              <div class="oj-flex-item">2</div>
             </div>
           </div>
 
@@ -125,7 +100,7 @@ export function Content() {
 
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-
+            <div class="oj-flex-item">3</div>
               {/* Top half of column */}
               {/* <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
@@ -148,38 +123,62 @@ export function Content() {
           </div>
         </div>
 
+{/* car visualisation */}
         {/* Parent container for bottom row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
 
           {/* Child container for first column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of the first column */}
-              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
-                <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md">Throttle </span>
-                  <span
-                    class={throttle ? "on" : "clear"}
-                    style="display:inline-block;width:30px;height:1rem"></span>
-                </div>
-                <div class="oj-flex-item">
-                <span class="oj-typography-subheading-md">Brake </span>
-                  <span
-                    class={brake ? "off" : "clear"}
-                    style="display:inline-block;width:30px;height:1rem"></span>
-                </div>
-              </div>
+                        <div class="oj-flex-item">
+                        <img src="styles/images/car/sand_01.png"
+                        class="f1-meter-tire"
+                        />
+                        </div>
+                        <div class="oj-flex-item">
+                        <img src="styles/images/car/sand_03.png" 
+                         class="f1-meter-tire"/>
+                        </div>
+            </div>
+          </div>
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
+            {/* Stack elements in this column so that they layout vertically */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of the first column */}
+                        <div class="oj-flex-item">
+                        <img src="styles/images/car/sand_02.png"  
+                        class="f1-meter-tire"
+                        />
+                        </div>
+                        <div class="oj-flex-item">
+                        <img src="styles/images/car/sand_04.png" 
+                        class="f1-meter-tire"
+                        />
+                        </div>
             </div>
           </div>
 
           {/* Center column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center  center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of center column */}
-              <div class="oj-flex-item">
-                <img src="styles/images/sw.png" class={steeringStyles} />
+              <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-2x-bottom position-center">
+                <oj-status-meter-gauge
+                  class="f1-meter-lg"
+                  min={0}
+                  max={350}
+                  value={speed}
+                  startAngle={180}
+                  labelledBy="startAngle"
+                  angleExtent={180}
+                  metricLabel={{
+
+                    style: { color: '#f9f9f6' , fontSize: "1.2rem", fontFamily: 'sans-comic' }
+                  }}
+                  orientation="circular"></oj-status-meter-gauge>
               </div>
             </div>
           </div>
@@ -206,6 +205,153 @@ export function Content() {
                   referenceLines={referenceLines}
                   orientation="circular"></oj-status-meter-gauge>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+
+          {/* Child container for first column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Stack elements in this column so that they layout vertically */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of center column */}
+              {/* <div class="oj-flex-item">
+                <img src="styles/images/sw.png" class={steeringStyles} />
+              </div> */}
+              <div class="oj-flex-item">7</div>
+            </div>
+          </div>
+          </div>
+
+          {/* Center column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of center column */}
+              {/* <div class="oj-flex-item">
+                <img src="styles/images/sw.png" class={steeringStyles} />
+              </div> */}
+              <div class="oj-flex-item">8</div>
+            </div>
+          </div>
+          
+          {/* Third column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of column elements */}
+              <div class="oj-flex-item">9</div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+                {/* Parent container for bottom row of elements */}
+                <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+
+{/* Child container for first column of elements */}
+<div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+  {/* Stack elements in this column so that they layout vertically */}
+  <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+    {/* Bottom half of the first column */}
+    <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
+      <div class="oj-flex-item"  >
+        <span class="oj-typography-subheading-md" >Throttle </span>
+        <span
+          class={throttle ? "on" : "clear"}
+          style="display:inline-block;width:30px;height:1rem"></span>
+      </div>
+      <div class="oj-flex-item">
+      <span class="oj-typography-subheading-md">Brake </span>
+        <span
+          class={brake ? "off" : "clear"}
+          style="display:inline-block;width:30px;height:1rem"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Center column of elements */}
+<div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+  {/* Force the content into a vertical column layout  */}
+  <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+    {/* Bottom half of center column */}
+    <div class="oj-flex-item">
+      <img src="styles/images/sw.png" class={steeringStyles} />
+    </div>
+  </div>
+</div>
+
+{/* Third column of elements */}
+<div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+  {/* Force the content into a vertical column layout  */}
+  <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+    {/* Bottom half of column elements */}
+    <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
+      <oj-status-meter-gauge
+        class="f1-meter-gear"
+        min={0}
+        max={10}
+        value={gear}
+        startAngle={180}
+        labelledBy="startAngle"
+        angleExtent={180}
+        metricLabel={{
+          position: "outsidePlotArea",
+          style: { color: '#f9f9f6', fontSize: "1.2rem", fontFamily: 'sans-comic' }
+        }}
+        // thresholds={thresholdValues}
+        // referenceLines={referenceLines}
+        orientation="circular"></oj-status-meter-gauge>
+    </div>
+    {/* <div class="oj-flex-item">Gears</div> */}
+  </div>
+</div>
+</div>
+        {/* Parent container for bottom row of elements */}
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+
+          {/* Child container for first column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Stack elements in this column so that they layout vertically */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of center column */}
+              {/* <div class="oj-flex-item">
+                <img src="styles/images/sw.png" class={steeringStyles} />
+              </div> */}
+              <div class="oj-flex-item">14</div>
+            </div>
+          </div>
+          </div>
+
+          {/* Center column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of center column */}
+              {/* <div class="oj-flex-item">
+                <img src="styles/images/sw.png" class={steeringStyles} />
+              </div> */}
+              <div class="oj-flex-item">15</div>
+            </div>
+          </div>
+          
+          {/* Third column of elements */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+            {/* Force the content into a vertical column layout  */}
+            <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
+              {/* Bottom half of column elements */}
+              <div class="oj-flex-item">16</div>
             </div>
           </div>
         </div>
