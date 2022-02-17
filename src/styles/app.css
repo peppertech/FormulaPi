@@ -76,6 +76,7 @@ html[dir="rtl"] .demo-oracle-icon {
 .steering-size {
   height: 150px;
   width: 250px;
+  padding-left: 40px;
   display: block;
   margin: auto;
 }
