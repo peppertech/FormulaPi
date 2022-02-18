@@ -43,16 +43,20 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                 setSteer(carData.m_car_telemetry_data[0].m_steer);
                 setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
                 settyreTempRL({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0], location: '03'
+                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
+                    location: "03",
                 });
                 settyreTempRR({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1], location: '02'
+                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
+                    location: "02",
                 });
                 setTyreTempFL({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2], location: '04'
+                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
+                    location: "04",
                 });
                 setTyreTempFR({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3], location: '01'
+                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
+                    location: "01",
                 });
                 //console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
             });
@@ -149,7 +153,7 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
             { value: 13500, color: "#c74634" },
         ];
         return (preact_1.h("div", { class: "" },
-            preact_1.h("div", { class: "oj-flex oj-sm-flex-direction-column oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber" },
+            preact_1.h("div", { class: "oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber" },
                 preact_1.h("div", { class: "oj-flex-item oj-flex-bar", style: "max-height:25px;" },
                     preact_1.h("div", { class: "oj-flex-bar-start" },
                         preact_1.h("div", { style: "margin-bottom:13px; color:white" },
@@ -174,7 +178,7 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                                 preact_1.h("img", { src: tyreTempRR, class: "f1-meter-tire" })),
                             preact_1.h("div", { class: "oj-flex-item" },
                                 preact_1.h("img", { src: tyreTempFL, class: "f1-meter-tire" })))),
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center  center-sizing" },
+                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center center-sizing" },
                         preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
                             preact_1.h("div", { class: "oj-flex-item position-center" },
                                 preact_1.h("oj-status-meter-gauge", { class: "f1-meter-lg", min: 0, max: 350, value: speed, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, metricLabel: {
@@ -195,15 +199,15 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                                             fontFamily: "sans-comic",
                                         },
                                     }, thresholds: thresholdValues, referenceLines: referenceLines, orientation: "circular" }))))),
-                preact_1.h("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column" },
+                preact_1.h("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column bottom-row-alignment" },
                     preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing" },
                         preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
                             preact_1.h("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
                                 preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md" }, "Throttle "),
+                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" }, "Throttle "),
                                     preact_1.h("span", { class: throttle ? "on" : "clear", style: "display:inline-block;width:30px;height:1rem" })),
                                 preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md" }, "Brake "),
+                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" }, "Brake "),
                                     preact_1.h("span", { class: brake ? "off" : "clear", style: "display:inline-block;width:30px;height:1rem" }))))),
                     preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing" },
                         preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
@@ -219,10 +223,7 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                                             fontSize: "1.2rem",
                                             fontFamily: "sans-comic",
                                         },
-                                    }, 
-                                    // thresholds={thresholdValues}
-                                    // referenceLines={referenceLines}
-                                    orientation: "circular" }))))))));
+                                    }, orientation: "circular" }))))))));
     }
     exports.Content = Content;
 });

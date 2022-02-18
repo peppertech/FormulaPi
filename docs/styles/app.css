@@ -104,6 +104,12 @@ html[dir="rtl"] .demo-oracle-icon {
 .side-sizing {
   max-width: 25%;
 }
+
+.bottom-row-alignment {
+  margin-top: auto;
+  margin-bottom: 10vh;
+}
+
 .position-center {
   margin: auto;
 }
