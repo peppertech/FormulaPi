@@ -23,7 +23,7 @@ html:not([dir="rtl"]) .demo-oracle-icon {
 }
 
 html[dir="rtl"] .demo-oracle-icon {
-  padding-left: 4px;
+  padding-left: 0.2px;
 }
 
 .demo-oracle-icon:before {
@@ -40,12 +40,23 @@ html[dir="rtl"] .demo-oracle-icon {
 }
 
 .f1-meter-lg {
-  height: 14rem;
+  height: 100%;
   width: 100%;
 }
-
+/* rpm */
 .f1-meter-md {
-  height: 8rem;
+  height: 5rem;
+}
+
+/* gearbox */
+.f1-meter-gear {
+  height: 5rem;
+}
+
+/* tires */
+.f1-meter-tire {
+  height: 60px;
+  width: 135px;
 }
 
 .f1-dashboard {
@@ -54,17 +65,18 @@ html[dir="rtl"] .demo-oracle-icon {
   margin: auto;
 }
 .on {
-  background-color: green;
+  background-color: #e3dbbf;
 }
 .off {
-  background-color: red;
+  background-color: #c74634;
 }
 .clear {
   background-color: auto;
 }
 .steering-size {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 250px;
+  padding-left: 40px;
   display: block;
   margin: auto;
 }
@@ -80,6 +92,10 @@ html[dir="rtl"] .demo-oracle-icon {
 .steer-right {
   transform: rotate(30deg);
   transition: 0.5s ease-in-out;
+}
+
+.bg-fiber {
+  background: repeat url("images/bg2.png");
 }
 
 .center-sizing {
@@ -104,8 +120,8 @@ html[dir="rtl"] .demo-oracle-icon {
 
 @media (max-width: 480px) {
   .f1-dashboard {
-    width: 95vw;
-    height: calc(98vh - 53px);
+    width: 480px;
+    height: 600px;
     margin: auto;
   }
   .center-sizing {
