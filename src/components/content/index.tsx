@@ -23,12 +23,6 @@ export function Content() {
   const [rpm, setRPM] = useState(0);
   const [steer, setSteer] = useState(0);
 
-  /* Tyre temperature */
-  const [tyreTempFR, setTyreTempFR] = useState(imgPath + "green_01.png"); // Front Right
-  const [tyreTempBR, setTyreTempBR] = useState(imgPath + "green_02.png"); // Back Right
-  const [tyreTempBL, setTyreTempBL] = useState(imgPath + "green_03.png"); // Back Left
-  const [tyreTempFL, setTyreTempFL] = useState(imgPath + "green_04.png"); // Front Left
-
   /* Run mode  */
   const [mode, setMode] = useState("simulator");
 
@@ -46,7 +40,7 @@ export function Content() {
     socket.addEventListener("open", (event) => {
       timerId = setInterval(
         () => socket.send("getPacketCarTelemetryData"),
-        1000 / 22
+        1000 / frameRate
       );
     });
 
@@ -60,20 +54,23 @@ export function Content() {
       setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
       setSteer(carData.m_car_telemetry_data[0].m_steer);
       setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
-      setTyreTempFR(
-        carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0]
-      );
-      setTyreTempBR(
-        carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1]
-      );
-      setTyreTempBL(
-        carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2]
-      );
-      setTyreTempFL(
-        carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3]
-      );
+      settyreTempRL({
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],location:
+      '03'});
+      settyreTempRR({
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],location:
+        '02'
+      });
+      setTyreTempFL({
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],location:
+        '04'
+      });
+      setTyreTempFR({
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],location:
+        '01'
+      });
 
-      console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
+      //console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
     });
   };
 
@@ -103,7 +100,7 @@ export function Content() {
   const disconnectFromServer = (event: ojButton.ojAction) => {
     if (mode === "simulator") {
       clearInterval(dataFlow);
-      flowIndex = 999999;
+      flowIndex = 9999999;
       console.log("Simulator stopped");
     } else {
       if (socket != null && socket.readyState === 1) {
@@ -126,34 +123,45 @@ export function Content() {
     }
   };
 
+  /* Tyre temp color coding is
+   **  Less than 100 degrees : Green
+   **  Greater than 100 but less than 125 : Yellow / Sand
+   **  Greater than or equal to 125 : Red
+   */
+  const defineTyreColor = (state, action) => {
+    let code = "";
+    if (action.type <= 100) {
+      code = "green";
+    } else if (action.type < 120) {
+      code = "yellow";
+    } else if (action.type > 125) {
+      code = "red";
+    }
+    switch (code) {
+      case "red":
+        return imgPath+"red_"+action.location+".png";
+      case "yellow":
+        return imgPath+"yellow_"+action.location+".png";
+      case "green":
+        return imgPath+"green_"+action.location+".png";
+      default:
+        return imgPath+"no-wheels_"+action.location+".png";
+    }
+  };
+
+  /* Tyre temperature */
+  const [tyreTempFR, setTyreTempFR] = useReducer(defineTyreColor, imgPath+"sand_01.png"); // Front Right
+  const [tyreTempRR, settyreTempRR] = useReducer(defineTyreColor, imgPath+"sand_02.png"); // Rear Right
+  const [tyreTempRL, settyreTempRL] = useReducer(defineTyreColor, imgPath+"sand_03.png"); // Rear Left
+  const [tyreTempFL, setTyreTempFL] = useReducer(defineTyreColor, imgPath+"sand_04.png"); // Front Left
+
+
   const [steeringStyles, setsteeringStyles] = useReducer(
     getStyles,
     "steering-size"
   );
 
-  useEffect(() => {
-    // let i = 0;
-    // if (mode === "simulator") {
-    //   const throttleDataFlow = () => {
-    //     if (i < data.length) {
-    //       setFrameNum(data[i].M_FRAME);
-    //       setSpeed(data[i].M_SPEED);
-    //       setThrottle(data[i].M_THROTTLE);
-    //       setBrake(data[i].M_BRAKE);
-    //       setGear(data[i].M_GEAR);
-    //       setRPM(data[i].M_ENGINERPM);
-    //       setSteer(data[i].M_STEER);
-    //       setsteeringStyles({ type: data[i].M_STEER });
-    //       i++;
-    //     } else {
-    //       clearInterval(dataFlow);
-    //     }
-    //   };
-    //   const dataFlow = setInterval(throttleDataFlow, 1000 / frameRate); // read the fasteslap data at one 18 frames per second.
-    // } else {
-    //   connectToServer();
-    // }
-  }, []);
+  useEffect(() => {}, []);
 
   const thresholdValues = [
     { max: 11500, color: "#77b0b8" },
@@ -204,14 +212,14 @@ export function Content() {
                 <img src={tyreTempFR} class="f1-meter-tire" />
               </div>
               <div class="oj-flex-item">
-                <img src={tyreTempBL} class="f1-meter-tire" />
+                <img src={tyreTempRL} class="f1-meter-tire" />
               </div>
             </div>
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               {/* Bottom half of the first column */}
               <div class="oj-flex-item">
-                <img src={tyreTempBR} class="f1-meter-tire" />
+                <img src={tyreTempRR} class="f1-meter-tire" />
               </div>
               <div class="oj-flex-item">
                 <img src={tyreTempFL} class="f1-meter-tire" />
