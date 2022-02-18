@@ -55,19 +55,20 @@ export function Content() {
       setSteer(carData.m_car_telemetry_data[0].m_steer);
       setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
       settyreTempRL({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],location:
-      '03'});
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
+        location: "03",
+      });
       settyreTempRR({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],location:
-        '02'
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
+        location: "02",
       });
       setTyreTempFL({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],location:
-        '04'
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
+        location: "04",
       });
       setTyreTempFR({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],location:
-        '01'
+        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
+        location: "01",
       });
 
       //console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
@@ -139,22 +140,33 @@ export function Content() {
     }
     switch (code) {
       case "red":
-        return imgPath+"red_"+action.location+".png";
+        return imgPath + "red_" + action.location + ".png";
       case "yellow":
-        return imgPath+"yellow_"+action.location+".png";
+        return imgPath + "yellow_" + action.location + ".png";
       case "green":
-        return imgPath+"green_"+action.location+".png";
+        return imgPath + "green_" + action.location + ".png";
       default:
-        return imgPath+"no-wheels_"+action.location+".png";
+        return imgPath + "no-wheels_" + action.location + ".png";
     }
   };
 
   /* Tyre temperature */
-  const [tyreTempFR, setTyreTempFR] = useReducer(defineTyreColor, imgPath+"sand_01.png"); // Front Right
-  const [tyreTempRR, settyreTempRR] = useReducer(defineTyreColor, imgPath+"sand_02.png"); // Rear Right
-  const [tyreTempRL, settyreTempRL] = useReducer(defineTyreColor, imgPath+"sand_03.png"); // Rear Left
-  const [tyreTempFL, setTyreTempFL] = useReducer(defineTyreColor, imgPath+"sand_04.png"); // Front Left
-
+  const [tyreTempFR, setTyreTempFR] = useReducer(
+    defineTyreColor,
+    imgPath + "sand_01.png"
+  ); // Front Right
+  const [tyreTempRR, settyreTempRR] = useReducer(
+    defineTyreColor,
+    imgPath + "sand_02.png"
+  ); // Rear Right
+  const [tyreTempRL, settyreTempRL] = useReducer(
+    defineTyreColor,
+    imgPath + "sand_03.png"
+  ); // Rear Left
+  const [tyreTempFL, setTyreTempFL] = useReducer(
+    defineTyreColor,
+    imgPath + "sand_04.png"
+  ); // Front Left
 
   const [steeringStyles, setsteeringStyles] = useReducer(
     getStyles,
@@ -175,7 +187,8 @@ export function Content() {
   return (
     <div class="">
       {/* outer panel styling and sizing */}
-      <div class="oj-flex oj-sm-flex-direction-column oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
+      <div class="oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
+        {/* Control buttons and frame status text */}
         <div class="oj-flex-item oj-flex-bar" style="max-height:25px;">
           <div class="oj-flex-bar-start">
             <div style="margin-bottom:13px; color:white">
@@ -199,11 +212,10 @@ export function Content() {
             </oj-toolbar>
           </div>
         </div>
-
-        {/* car visualisation */}
-        {/* Parent container for bottom row of elements */}
+        
+        {/* Parent container for top row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
-          {/* Child container for first column of elements */}
+          {/* Child container for first column of elements: car visualisation */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
@@ -226,11 +238,10 @@ export function Content() {
               </div>
             </div>
           </div>
-          {/* Center column of elements */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center  center-sizing">
+          {/* Center column of elements: Speed guage */}
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of center column */}
               <div class="oj-flex-item position-center">
                 <oj-status-meter-gauge
                   class="f1-meter-lg"
@@ -253,11 +264,10 @@ export function Content() {
             </div>
           </div>
 
-          {/* Third column of elements */}
+          {/* Third column of elements: RPM guage */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of column elements */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
                   class="f1-meter-md"
@@ -285,22 +295,21 @@ export function Content() {
         </div>
 
         {/* Parent container for bottom row of elements */}
-        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
-          {/* Child container for first column of elements */}
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column bottom-row-alignment">
+          {/* Child container for first column of elements: Throttle and Brake status text */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of the first column */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md">Throttle </span>
+                  <span class="oj-typography-subheading-md oj-color-invert">Throttle </span>
                   <span
                     class={throttle ? "on" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"
                   ></span>
                 </div>
                 <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md">Brake </span>
+                  <span class="oj-typography-subheading-md oj-color-invert">Brake </span>
                   <span
                     class={brake ? "off" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"
@@ -310,11 +319,10 @@ export function Content() {
             </div>
           </div>
 
-          {/* Center column of elements */}
+          {/* Center column of elements: steering animation */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of center column */}
               <div class="oj-flex-item">
                 <img
                   src="styles/images/sw.png"
@@ -325,11 +333,10 @@ export function Content() {
             </div>
           </div>
 
-          {/* Third column of elements */}
+          {/* Third column of elements: Gear guage */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of column elements */}
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <oj-status-meter-gauge
                   class="f1-meter-gear"
@@ -347,12 +354,9 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
-                  // thresholds={thresholdValues}
-                  // referenceLines={referenceLines}
                   orientation="circular"
                 ></oj-status-meter-gauge>
               </div>
-              {/* <div class="oj-flex-item">Gears</div> */}
             </div>
           </div>
         </div>
