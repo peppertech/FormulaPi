@@ -12,7 +12,7 @@
       "exchangeComponents": "exchange_components"
     },
     "staging": {
-      "web": "docs",
+      "web": "web",
       "hybrid": "hybrid",
       "themes": "staged-themes"
     }
