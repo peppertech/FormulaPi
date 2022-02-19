@@ -6,7 +6,7 @@ import "ojs/ojgauge";
 import "ojs/ojbutton";
 import "ojs/ojtoolbar";
 
-const url = "ws://130.61.139.189:8001";
+const wsServiceUrl = "ws://130.61.139.189:8001";
 let carData = null;
 let socket = null;
 let timerId = null;
@@ -35,7 +35,7 @@ export function Content() {
   const connectToServer = () => {
     setMode("live");
     if (!socket || socket.readyState !== 1) {
-      socket = new WebSocket(url);
+      socket = new WebSocket(wsServiceUrl);
     }
     socket.addEventListener("open", (event) => {
       timerId = setInterval(
@@ -70,8 +70,6 @@ export function Content() {
         type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
         location: "01",
       });
-
-      //console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
     });
   };
 
@@ -146,7 +144,7 @@ export function Content() {
       case "green":
         return imgPath + "green_" + action.location + ".png";
       default:
-        return imgPath + "no-wheels_" + action.location + ".png";
+        return imgPath + "sand_" + action.location + ".png";
     }
   };
 
@@ -188,7 +186,7 @@ export function Content() {
     <div class="">
       {/* outer panel styling and sizing */}
       <div class="oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
-        {/* Control buttons and frame status text */}
+        {/* Control buttons and framerate status text */}
         <div class="oj-flex-item oj-flex-bar" style="max-height:25px;">
           <div class="oj-flex-bar-start">
             <div style="margin-bottom:13px; color:white">
@@ -219,7 +217,6 @@ export function Content() {
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of the first column */}
               <div class="oj-flex-item">
                 <img src={tyreTempFR} class="f1-meter-tire" />
               </div>
@@ -229,7 +226,6 @@ export function Content() {
             </div>
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
-              {/* Bottom half of the first column */}
               <div class="oj-flex-item">
                 <img src={tyreTempRR} class="f1-meter-tire" />
               </div>
@@ -238,7 +234,7 @@ export function Content() {
               </div>
             </div>
           </div>
-          {/* Center column of elements: Speed guage */}
+          {/* Center column of elements: Speed gauge */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center center-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
@@ -264,7 +260,7 @@ export function Content() {
             </div>
           </div>
 
-          {/* Third column of elements: RPM guage */}
+          {/* Third column of elements: RPM gauge */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
@@ -333,7 +329,7 @@ export function Content() {
             </div>
           </div>
 
-          {/* Third column of elements: Gear guage */}
+          {/* Third column of elements: Gear gauge */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
