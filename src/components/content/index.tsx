@@ -29,7 +29,7 @@ export function Content() {
   /* Simulator data and config  */
   const [frameNum, setFrameNum] = useState(0);
   const data = JSON.parse(trackData);
-  const frameRate = 22;
+  const frameRate = 20;
 
   /* Connect to Websocket relay for live data  */
   const connectToServer = () => {
