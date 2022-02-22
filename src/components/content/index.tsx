@@ -47,29 +47,31 @@ export function Content() {
     /* Listen for data coming from socket request */
     socket.addEventListener("message", function (event) {
       carData = JSON.parse(event.data);
-      setSpeed(carData.m_car_telemetry_data[0].m_speed);
-      setThrottle(carData.m_car_telemetry_data[0].m_throttle);
-      setBrake(carData.m_car_telemetry_data[0].m_brake);
-      setGear(carData.m_car_telemetry_data[0].m_gear);
-      setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
-      setSteer(carData.m_car_telemetry_data[0].m_steer);
-      setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
-      settyreTempRL({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
-        location: "03",
-      });
-      settyreTempRR({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
-        location: "02",
-      });
-      setTyreTempFL({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
-        location: "04",
-      });
-      setTyreTempFR({
-        type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
-        location: "01",
-      });
+      if (Object.keys(carData).length !== 0) {
+        setSpeed(carData.m_car_telemetry_data[0].m_speed);
+        setThrottle(carData.m_car_telemetry_data[0].m_throttle);
+        setBrake(carData.m_car_telemetry_data[0].m_brake);
+        setGear(carData.m_car_telemetry_data[0].m_gear);
+        setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
+        setSteer(carData.m_car_telemetry_data[0].m_steer);
+        setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
+        settyreTempRL({
+          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
+          location: "03",
+        });
+        settyreTempRR({
+          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
+          location: "02",
+        });
+        setTyreTempFL({
+          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
+          location: "04",
+        });
+        setTyreTempFR({
+          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
+          location: "01",
+        });
+      }
     });
   };
 
@@ -210,7 +212,7 @@ export function Content() {
             </oj-toolbar>
           </div>
         </div>
-        
+
         {/* Parent container for top row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
           {/* Child container for first column of elements: car visualisation */}
@@ -298,14 +300,18 @@ export function Content() {
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
                 <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md oj-color-invert">Throttle </span>
+                  <span class="oj-typography-subheading-md oj-color-invert">
+                    Throttle{" "}
+                  </span>
                   <span
                     class={throttle ? "on" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"
                   ></span>
                 </div>
                 <div class="oj-flex-item">
-                  <span class="oj-typography-subheading-md oj-color-invert">Brake </span>
+                  <span class="oj-typography-subheading-md oj-color-invert">
+                    Brake{" "}
+                  </span>
                   <span
                     class={brake ? "off" : "clear"}
                     style="display:inline-block;width:30px;height:1rem"
