@@ -47,6 +47,7 @@ export function Content() {
     /* Listen for data coming from socket request */
     socket.addEventListener("message", function (event) {
       carData = JSON.parse(event.data);
+      // console.log(JSON.stringify(carData));
       if (Object.keys(carData).length !== 0) {
         setSpeed(carData.m_car_telemetry_data[0].m_speed);
         setThrottle(carData.m_car_telemetry_data[0].m_throttle);
@@ -131,11 +132,11 @@ export function Content() {
    */
   const defineTyreColor = (state, action) => {
     let code = "";
-    if (action.type <= 100) {
+    if (action.type <= 86) {
       code = "green";
-    } else if (action.type < 120) {
+    } else if (action.type < 96) {
       code = "yellow";
-    } else if (action.type > 125) {
+    } else if (action.type >= 96) {
       code = "red";
     }
     switch (code) {
