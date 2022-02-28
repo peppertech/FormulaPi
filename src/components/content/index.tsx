@@ -6,6 +6,7 @@ import "ojs/ojgauge";
 import "ojs/ojbutton";
 import "ojs/ojtoolbar";
 
+// const wsServiceUrl = "ws://130.61.139.189:8001"; Nacho
 const wsServiceUrl = "ws://130.61.139.189:8001";
 let carData = null;
 let socket = null;
@@ -29,7 +30,7 @@ export function Content() {
   /* Simulator data and config  */
   const [frameNum, setFrameNum] = useState(0);
   const data = JSON.parse(trackData);
-  const frameRate = 20;
+  const frameRate = 40;
 
   /* Connect to Websocket relay for live data  */
   const connectToServer = () => {
@@ -47,7 +48,10 @@ export function Content() {
     /* Listen for data coming from socket request */
     socket.addEventListener("message", function (event) {
       carData = JSON.parse(event.data);
-      // console.log(JSON.stringify(carData));
+      if (typeof carData === "string") {
+        carData = JSON.parse(carData);
+      }
+      console.log(JSON.stringify(carData));
       if (Object.keys(carData).length !== 0) {
         setSpeed(carData.m_car_telemetry_data[0].m_speed);
         setThrottle(carData.m_car_telemetry_data[0].m_throttle);
