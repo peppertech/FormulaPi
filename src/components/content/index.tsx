@@ -119,10 +119,13 @@ export function Content() {
 
   /* setup steering wheel animation styles  */
   const getStyles = (state, action) => {
-    switch (action.type) {
-      case action.type < 0:
+    let steerDirection = 0;
+    if(action.type < 0) steerDirection = -1
+    if(action.type > 0) steerDirection = 1
+    switch (steerDirection) {
+      case -1:
         return "steering-size steer-left";
-      case action.type > 0:
+      case 1:
         return "steering-size steer-right";
       default:
         return "steering-size steer-straight";
