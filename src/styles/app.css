@@ -114,6 +114,49 @@ html[dir="rtl"] .demo-oracle-icon {
   margin: auto;
 }
 
+.weather {
+  background: url("images/weather.png") no-repeat;
+}
+.sunny {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: 0 0; /* Icon background position in sprite */
+}
+
+.light-clouds {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: -82 0; /* Icon background position in sprite */
+}
+.overcast {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: -164 0; /* Icon background position in sprite */
+}
+.light-rain {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: -246 0; /* Icon background position in sprite */
+}
+.heavy-rain {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: -328 0; /* Icon background position in sprite */
+}
+.storms {
+  width: 65px; /* Icon width */
+  height: 65px; /* Icon height */
+  display: inline-block; /* Display icon as inline block */
+  background-position: -410 0; /* Icon background position in sprite */
+}
+
+
+
 @media (-webkit-min-device-pixel-ratio: 1.5),
   (min-resolution: 144dpi),
   (min-resolution: 1.5dppx) {

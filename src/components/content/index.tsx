@@ -16,13 +16,32 @@ let flowIndex = 0;
 const imgPath = "styles/images/car/";
 
 export function Content() {
-  /* car behavior stats  */
+  /* car behavior states  */
   const [speed, setSpeed] = useState(0);
   const [throttle, setThrottle] = useState("");
   const [brake, setBrake] = useState("");
   const [gear, setGear] = useState(0);
   const [rpm, setRPM] = useState(0);
   const [steer, setSteer] = useState(0);
+
+  /* session data states */
+  const [sessionType, setSessionType] = useState(0);
+  /* 
+    0 = unknown, 
+    1 = P1, 
+    2 = P2, 
+    3 = P3, 
+    4 = Short P, 
+    5 = Q1, 
+    6 = Q2, 
+    7 = Q3, 
+    8 = Short Q, 
+    9 = OSQ,  
+    10 = R, 
+    11 = R2, 
+    12 = R3, 
+    13 = Time Trial
+  */
 
   /* Run mode  */
   const [mode, setMode] = useState("simulator");
@@ -39,6 +58,7 @@ export function Content() {
       socket = new WebSocket(wsServiceUrl);
     }
     socket.addEventListener("open", (event) => {
+      () => socket.send("getPacketSessionData");
       timerId = setInterval(
         () => socket.send("getPacketCarTelemetryData"),
         1000 / frameRate
@@ -47,35 +67,47 @@ export function Content() {
 
     /* Listen for data coming from socket request */
     socket.addEventListener("message", function (event) {
-      carData = JSON.parse(event.data);
-      if (typeof carData === "string") {
-        carData = JSON.parse(carData);
+      let jsonData = JSON.parse(event.data);
+      if (typeof jsonData === "string") {
+        jsonData = JSON.parse(jsonData);
       }
-      console.log(JSON.stringify(carData));
-      if (Object.keys(carData).length !== 0) {
-        setSpeed(carData.m_car_telemetry_data[0].m_speed);
-        setThrottle(carData.m_car_telemetry_data[0].m_throttle);
-        setBrake(carData.m_car_telemetry_data[0].m_brake);
-        setGear(carData.m_car_telemetry_data[0].m_gear);
-        setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
-        setSteer(carData.m_car_telemetry_data[0].m_steer);
-        setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
-        settyreTempRL({
-          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
-          location: "03",
-        });
-        settyreTempRR({
-          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
-          location: "02",
-        });
-        setTyreTempFL({
-          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
-          location: "04",
-        });
-        setTyreTempFR({
-          type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
-          location: "01",
-        });
+      if (jsonData.m_session_type) {
+        setSessionType(jsonData.m_session_type);
+        setweatherStyles({ type: jsonData.m_weather });
+      } else if (jsonData.m_car_telemetry_data) {
+        carData = jsonData;
+        console.log(JSON.stringify(carData));
+        if (Object.keys(carData).length !== 0) {
+          setSpeed(carData.m_car_telemetry_data[0].m_speed);
+          setThrottle(carData.m_car_telemetry_data[0].m_throttle);
+          setBrake(carData.m_car_telemetry_data[0].m_brake);
+          setGear(carData.m_car_telemetry_data[0].m_gear);
+          setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
+          setSteer(carData.m_car_telemetry_data[0].m_steer);
+          setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
+          if (sessionType != 13) {
+            settyreTempRL({
+              type: carData.m_car_telemetry_data[0]
+                .m_tyres_surface_temperature[0],
+              location: "03",
+            });
+            settyreTempRR({
+              type: carData.m_car_telemetry_data[0]
+                .m_tyres_surface_temperature[1],
+              location: "02",
+            });
+            setTyreTempFL({
+              type: carData.m_car_telemetry_data[0]
+                .m_tyres_surface_temperature[2],
+              location: "04",
+            });
+            setTyreTempFR({
+              type: carData.m_car_telemetry_data[0]
+                .m_tyres_surface_temperature[3],
+              location: "01",
+            });
+          }
+        }
       }
     });
   };
@@ -84,6 +116,7 @@ export function Content() {
   const runSimulation = () => {
     setMode("simulator");
     flowIndex = 0;
+    setweatherStyles({ type: 0 });
     const throttleDataFlow = () => {
       if (flowIndex < data.length) {
         setFrameNum(data[flowIndex].M_FRAME);
@@ -117,11 +150,36 @@ export function Content() {
     }
   };
 
+  /* Weather types
+    0 = clear/sunny, 
+    1 = light cloud, 
+    2 = overcast 
+    3 = light rain, 
+    4 = heavy rain, 
+    5 = storm
+  */
+  const defineWeatherStyle = (state, action) => {
+    switch (action.type) {
+      case 1:
+        return "weather light-clouds";
+      case 2:
+        return "weather overcast";
+      case 3:
+        return "weather light-rain";
+      case 4:
+        return "weather heavy-rain";
+      case 5:
+        return "weather storms";
+      default:
+        return "weather sunny";
+    }
+  };
+
   /* setup steering wheel animation styles  */
   const getStyles = (state, action) => {
     let steerDirection = 0;
-    if(action.type < 0) steerDirection = -1
-    if(action.type > 0) steerDirection = 1
+    if (action.type < 0) steerDirection = -1;
+    if (action.type > 0) steerDirection = 1;
     switch (steerDirection) {
       case -1:
         return "steering-size steer-left";
@@ -181,6 +239,11 @@ export function Content() {
     "steering-size"
   );
 
+  const [weatherStyles, setweatherStyles] = useReducer(
+    defineWeatherStyle,
+    "weather sunny"
+  );
+
   useEffect(() => {}, []);
 
   const thresholdValues = [
@@ -199,10 +262,13 @@ export function Content() {
         {/* Control buttons and framerate status text */}
         <div class="oj-flex-item oj-flex-bar" style="max-height:25px;">
           <div class="oj-flex-bar-start">
+            <div class={weatherStyles}></div>
+          </div>
+          {/* <div class="oj-flex-bar-middle">
             <div style="margin-bottom:13px; color:white">
               Current Frame({frameRate}/sec): {frameNum}
             </div>
-          </div>
+          </div> */}
           <div class="oj-flex-bar-end">
             <oj-toolbar class="oj-color-invert">
               <oj-button onojAction={runSimulation} chroming="callToAction">
