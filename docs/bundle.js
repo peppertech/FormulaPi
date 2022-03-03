@@ -1044,7 +1044,8 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Content = void 0;
-    const url = "ws://130.61.139.189:8001";
+    // const wsServiceUrl = "ws://130.61.139.189:8001"; Nacho
+    const wsServiceUrl = "ws://130.61.139.189:8001";
     let carData = null;
     let socket = null;
     let timerId = null;
@@ -1052,61 +1053,99 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
     let flowIndex = 0;
     const imgPath = "styles/images/car/";
     function Content() {
-        /* car behavior stats  */
+        /* car behavior states  */
         const [speed, setSpeed] = hooks_1.useState(0);
         const [throttle, setThrottle] = hooks_1.useState("");
         const [brake, setBrake] = hooks_1.useState("");
         const [gear, setGear] = hooks_1.useState(0);
         const [rpm, setRPM] = hooks_1.useState(0);
         const [steer, setSteer] = hooks_1.useState(0);
+        /* session data states
+          0 = unknown,
+          1 = P1,
+          2 = P2,
+          3 = P3,
+          4 = Short P,
+          5 = Q1,
+          6 = Q2,
+          7 = Q3,
+          8 = Short Q,
+          9 = OSQ,
+          10 = R,
+          11 = R2,
+          12 = R3,
+          13 = Time Trial
+        */
+        const [sessionType, setSessionType] = hooks_1.useState(0);
         /* Run mode  */
         const [mode, setMode] = hooks_1.useState("simulator");
         /* Simulator data and config  */
         const [frameNum, setFrameNum] = hooks_1.useState(0);
         const data = JSON.parse(trackData);
-        const frameRate = 22;
+        const frameRate = 40;
         /* Connect to Websocket relay for live data  */
         const connectToServer = () => {
             setMode("live");
             if (!socket || socket.readyState !== 1) {
-                socket = new WebSocket(url);
+                socket = new WebSocket(wsServiceUrl);
             }
             socket.addEventListener("open", (event) => {
+                () => socket.send("getPacketSessionData");
                 timerId = setInterval(() => socket.send("getPacketCarTelemetryData"), 1000 / frameRate);
             });
             /* Listen for data coming from socket request */
             socket.addEventListener("message", function (event) {
-                carData = JSON.parse(event.data);
-                setSpeed(carData.m_car_telemetry_data[0].m_speed);
-                setThrottle(carData.m_car_telemetry_data[0].m_throttle);
-                setBrake(carData.m_car_telemetry_data[0].m_brake);
-                setGear(carData.m_car_telemetry_data[0].m_gear);
-                setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
-                setSteer(carData.m_car_telemetry_data[0].m_steer);
-                setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
-                settyreTempRL({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
-                    location: "03",
-                });
-                settyreTempRR({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
-                    location: "02",
-                });
-                setTyreTempFL({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
-                    location: "04",
-                });
-                setTyreTempFR({
-                    type: carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
-                    location: "01",
-                });
-                //console.log("Car 1 Speed: " + carData.m_car_telemetry_data[0].m_speed);
+                let jsonData = JSON.parse(event.data);
+                if (typeof jsonData === "string") {
+                    jsonData = JSON.parse(jsonData);
+                }
+                if (jsonData.m_session_type) {
+                    setSessionType(jsonData.m_session_type);
+                    setweatherStyles({ type: jsonData.m_weather });
+                }
+                if (jsonData.m_car_telemetry_data) {
+                    carData = jsonData;
+                    console.log(JSON.stringify(carData));
+                    if (Object.keys(carData).length !== 0) {
+                        setSpeed(carData.m_car_telemetry_data[0].m_speed);
+                        setThrottle(carData.m_car_telemetry_data[0].m_throttle);
+                        setBrake(carData.m_car_telemetry_data[0].m_brake);
+                        setGear(carData.m_car_telemetry_data[0].m_gear);
+                        setRPM(carData.m_car_telemetry_data[0].m_engine_rpm);
+                        setSteer(carData.m_car_telemetry_data[0].m_steer);
+                        setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
+                        if (sessionType != 13) {
+                            settyreTempRL({
+                                type: carData.m_car_telemetry_data[0]
+                                    .m_tyres_surface_temperature[0],
+                                location: "03",
+                            });
+                            settyreTempRR({
+                                type: carData.m_car_telemetry_data[0]
+                                    .m_tyres_surface_temperature[1],
+                                location: "02",
+                            });
+                            setTyreTempFL({
+                                type: carData.m_car_telemetry_data[0]
+                                    .m_tyres_surface_temperature[2],
+                                location: "04",
+                            });
+                            setTyreTempFR({
+                                type: carData.m_car_telemetry_data[0]
+                                    .m_tyres_surface_temperature[3],
+                                location: "01",
+                            });
+                        }
+                    }
+                }
             });
         };
         /* Process simulated fastestlap data  */
         const runSimulation = () => {
             setMode("simulator");
             flowIndex = 0;
+            let randomWeather = Math.floor(Math.random() * 6);
+            setweatherStyles({ type: randomWeather });
             const throttleDataFlow = () => {
                 if (flowIndex < data.length) {
                     setFrameNum(data[flowIndex].M_FRAME);
@@ -1140,9 +1179,38 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
                 }
             }
         };
+        /* Weather types
+          0 = clear/sunny,
+          1 = light cloud,
+          2 = overcast
+          3 = light rain,
+          4 = heavy rain,
+          5 = storm
+        */
+        const defineWeatherStyle = (state, action) => {
+            switch (action.type) {
+                case 1:
+                    return "weather light-clouds";
+                case 2:
+                    return "weather overcast";
+                case 3:
+                    return "weather light-rain";
+                case 4:
+                    return "weather heavy-rain";
+                case 5:
+                    return "weather storms";
+                default:
+                    return "weather sunny";
+            }
+        };
         /* setup steering wheel animation styles  */
         const getStyles = (state, action) => {
-            switch (action.type) {
+            let steerDirection = 0;
+            if (action.type < 0)
+                steerDirection = -1;
+            if (action.type > 0)
+                steerDirection = 1;
+            switch (steerDirection) {
                 case -1:
                     return "steering-size steer-left";
                 case 1:
@@ -1158,13 +1226,13 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
          */
         const defineTyreColor = (state, action) => {
             let code = "";
-            if (action.type <= 100) {
+            if (action.type <= 86) {
                 code = "green";
             }
-            else if (action.type < 120) {
+            else if (action.type < 96) {
                 code = "yellow";
             }
-            else if (action.type > 125) {
+            else if (action.type >= 96) {
                 code = "red";
             }
             switch (code) {
@@ -1175,7 +1243,7 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
                 case "green":
                     return imgPath + "green_" + action.location + ".png";
                 default:
-                    return imgPath + "no-wheels_" + action.location + ".png";
+                    return imgPath + "sand_" + action.location + ".png";
             }
         };
         /* Tyre temperature */
@@ -1184,6 +1252,7 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
         const [tyreTempRL, settyreTempRL] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_03.png"); // Rear Left
         const [tyreTempFL, setTyreTempFL] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_04.png"); // Front Left
         const [steeringStyles, setsteeringStyles] = hooks_1.useReducer(getStyles, "steering-size");
+        const [weatherStyles, setweatherStyles] = hooks_1.useReducer(defineWeatherStyle, "weather sunny");
         hooks_1.useEffect(() => { }, []);
         const thresholdValues = [
             { max: 11500, color: "#77b0b8" },
@@ -1198,11 +1267,7 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
             preact_1.h("div", { class: "oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber" },
                 preact_1.h("div", { class: "oj-flex-item oj-flex-bar", style: "max-height:25px;" },
                     preact_1.h("div", { class: "oj-flex-bar-start" },
-                        preact_1.h("div", { style: "margin-bottom:13px; color:white" },
-                            "Current Frame(",
-                            frameRate,
-                            "/sec): ",
-                            frameNum)),
+                        preact_1.h("div", { class: weatherStyles })),
                     preact_1.h("div", { class: "oj-flex-bar-end" },
                         preact_1.h("oj-toolbar", { class: "oj-color-invert" },
                             preact_1.h("oj-button", { onojAction: runSimulation, chroming: "callToAction" }, "Simulator"),
@@ -1246,10 +1311,14 @@ define('components/content/index',["require", "exports", "preact", "preact/hooks
                         preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
                             preact_1.h("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
                                 preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" }, "Throttle "),
+                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" },
+                                        "Throttle",
+                                        " "),
                                     preact_1.h("span", { class: throttle ? "on" : "clear", style: "display:inline-block;width:30px;height:1rem" })),
                                 preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" }, "Brake "),
+                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" },
+                                        "Brake",
+                                        " "),
                                     preact_1.h("span", { class: brake ? "off" : "clear", style: "display:inline-block;width:30px;height:1rem" }))))),
                     preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing" },
                         preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
