@@ -128,31 +128,31 @@ html[dir="rtl"] .demo-oracle-icon {
   width: 65px; /* Icon width */
   height: 65px; /* Icon height */
   display: inline-block; /* Display icon as inline block */
-  background-position: -82 0; /* Icon background position in sprite */
+  background-position: -82px 0px; /* Icon background position in sprite */
 }
 .overcast {
   width: 65px; /* Icon width */
   height: 65px; /* Icon height */
   display: inline-block; /* Display icon as inline block */
-  background-position: -164 0; /* Icon background position in sprite */
+  background-position: -164px 0px; /* Icon background position in sprite */
 }
 .light-rain {
   width: 65px; /* Icon width */
   height: 65px; /* Icon height */
   display: inline-block; /* Display icon as inline block */
-  background-position: -246 0; /* Icon background position in sprite */
+  background-position: -246px 0px; /* Icon background position in sprite */
 }
 .heavy-rain {
   width: 65px; /* Icon width */
   height: 65px; /* Icon height */
   display: inline-block; /* Display icon as inline block */
-  background-position: -328 0; /* Icon background position in sprite */
+  background-position: -328px 0px; /* Icon background position in sprite */
 }
 .storms {
   width: 65px; /* Icon width */
   height: 65px; /* Icon height */
   display: inline-block; /* Display icon as inline block */
-  background-position: -410 0; /* Icon background position in sprite */
+  background-position: -410px 0px; /* Icon background position in sprite */
 }
 
 

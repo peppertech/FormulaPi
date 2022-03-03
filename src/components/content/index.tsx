@@ -74,7 +74,8 @@ export function Content() {
       if (jsonData.m_session_type) {
         setSessionType(jsonData.m_session_type);
         setweatherStyles({ type: jsonData.m_weather });
-      } else if (jsonData.m_car_telemetry_data) {
+      } 
+      if (jsonData.m_car_telemetry_data) {
         carData = jsonData;
         console.log(JSON.stringify(carData));
         if (Object.keys(carData).length !== 0) {
@@ -116,7 +117,8 @@ export function Content() {
   const runSimulation = () => {
     setMode("simulator");
     flowIndex = 0;
-    setweatherStyles({ type: 0 });
+    let randomWeather = Math.floor(Math.random() * 6);
+    setweatherStyles({ type: randomWeather });
     const throttleDataFlow = () => {
       if (flowIndex < data.length) {
         setFrameNum(data[flowIndex].M_FRAME);
@@ -239,10 +241,7 @@ export function Content() {
     "steering-size"
   );
 
-  const [weatherStyles, setweatherStyles] = useReducer(
-    defineWeatherStyle,
-    "weather sunny"
-  );
+  const [weatherStyles, setweatherStyles] = useReducer(defineWeatherStyle, "weather sunny");
 
   useEffect(() => {}, []);
 
