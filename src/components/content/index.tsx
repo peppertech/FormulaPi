@@ -24,9 +24,7 @@ export function Content() {
   const [rpm, setRPM] = useState(0);
   const [steer, setSteer] = useState(0);
 
-  /* session data states */
-  const [sessionType, setSessionType] = useState(0);
-  /* 
+  /* session data states  
     0 = unknown, 
     1 = P1, 
     2 = P2, 
@@ -42,6 +40,8 @@ export function Content() {
     12 = R3, 
     13 = Time Trial
   */
+  const [sessionType, setSessionType] = useState(0);
+  
 
   /* Run mode  */
   const [mode, setMode] = useState("simulator");
@@ -58,7 +58,7 @@ export function Content() {
       socket = new WebSocket(wsServiceUrl);
     }
     socket.addEventListener("open", (event) => {
-      () => socket.send("getPacketSessionData");
+      socket.send("getPacketSessionData");
       timerId = setInterval(
         () => socket.send("getPacketCarTelemetryData"),
         1000 / frameRate
@@ -74,10 +74,11 @@ export function Content() {
       if (jsonData.m_session_type) {
         setSessionType(jsonData.m_session_type);
         setweatherStyles({ type: jsonData.m_weather });
+        console.log('Session Data: ' + JSON.stringify(jsonData));
       } 
       if (jsonData.m_car_telemetry_data) {
         carData = jsonData;
-        console.log(JSON.stringify(carData));
+        console.log('Car Data: '+JSON.stringify(carData));
         if (Object.keys(carData).length !== 0) {
           setSpeed(carData.m_car_telemetry_data[0].m_speed);
           setThrottle(carData.m_car_telemetry_data[0].m_throttle);
@@ -149,6 +150,7 @@ export function Content() {
         socket.close();
         console.log("Server connection closed");
       }
+      if(socket.readyState === 3){console.log('Server connection was already closed.')};
     }
   };
 
@@ -261,7 +263,7 @@ export function Content() {
         {/* Control buttons and framerate status text */}
         <div class="oj-flex-item oj-flex-bar" style="max-height:25px;">
           <div class="oj-flex-bar-start">
-            <div class={weatherStyles}></div>
+            <div class={weatherStyles} title={weatherStyles}></div>
           </div>
           {/* <div class="oj-flex-bar-middle">
             <div style="margin-bottom:13px; color:white">
