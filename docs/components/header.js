@@ -16,12 +16,12 @@ define(["require", "exports", "preact", "ojs/ojresponsiveutils", "ojs/ojtoolbar"
             };
         }
         render(props, state) {
-            return (preact_1.h("header", { role: "banner", class: "oj-web-applayout-header" },
-                preact_1.h("div", { class: "oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center" },
-                    preact_1.h("div", { class: "oj-flex-bar-middle oj-sm-align-items-baseline" },
-                        preact_1.h("span", { role: "img", class: "oj-icon demo-oracle-icon", title: "Oracle Logo", alt: "Oracle Logo" }),
-                        preact_1.h("h1", { class: "oj-sm-only-hide oj-web-applayout-header-title", title: props.appName }, props.appName)),
-                    preact_1.h("div", { class: "oj-flex-bar-end" }))));
+            return ((0, preact_1.h)("header", { role: "banner", class: "oj-web-applayout-header" },
+                (0, preact_1.h)("div", { class: "oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center" },
+                    (0, preact_1.h)("div", { class: "oj-flex-bar-middle oj-sm-align-items-baseline" },
+                        (0, preact_1.h)("span", { role: "img", class: "oj-icon demo-oracle-icon", title: "Oracle Logo", alt: "Oracle Logo" }),
+                        (0, preact_1.h)("h1", { class: "oj-sm-only-hide oj-web-applayout-header-title", title: props.appName }, props.appName)),
+                    (0, preact_1.h)("div", { class: "oj-flex-bar-end" }))));
         }
         componentDidMount() {
             this.mediaQuery.addEventListener("change", this._mediaQueryChangeListener);

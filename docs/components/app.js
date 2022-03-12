@@ -10,9 +10,9 @@ define(["require", "exports", "ojs/ojvcomponent", "preact", "ojs/ojcontext", "./
     exports.App = void 0;
     let App = class App extends preact_1.Component {
         render(props) {
-            return (preact_1.h("div", { id: "appContainer", class: "oj-web-applayout-page" },
-                preact_1.h(header_1.Header, { appName: props.appName, userLogin: props.userLogin }),
-                preact_1.h(index_1.Content, null)));
+            return ((0, preact_1.h)("div", { id: "appContainer", class: "oj-web-applayout-page" },
+                (0, preact_1.h)(header_1.Header, { appName: props.appName, userLogin: props.userLogin }),
+                (0, preact_1.h)(index_1.Content, null)));
         }
         componentDidMount() {
             Context.getPageContext().getBusyContext().applicationBootstrapComplete();
@@ -24,7 +24,7 @@ define(["require", "exports", "ojs/ojvcomponent", "preact", "ojs/ojcontext", "./
     };
     App.metadata = { "properties": { "appName": { "type": "string" }, "userLogin": { "type": "string" } } };
     App = __decorate([
-        ojvcomponent_1.customElement("app-root")
+        (0, ojvcomponent_1.customElement)("app-root")
     ], App);
     exports.App = App;
 });
