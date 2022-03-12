@@ -67,6 +67,7 @@ html[dir="rtl"] .demo-oracle-icon {
 .on {
   background-color: #e3dbbf;
 }
+
 .off {
   background-color: #c74634;
 }
@@ -76,7 +77,6 @@ html[dir="rtl"] .demo-oracle-icon {
 .steering-size {
   height: 150px;
   width: 250px;
-  padding-left: 40px;
   display: block;
   margin: auto;
 }
@@ -107,7 +107,11 @@ html[dir="rtl"] .demo-oracle-icon {
 
 .bottom-row-alignment {
   margin-top: auto;
-  margin-bottom: 10vh;
+  /* margin-bottom: 10vh; */
+}
+
+.top-row-alignment {
+  margin-top: auto;
 }
 
 .position-center {

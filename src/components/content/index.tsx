@@ -261,7 +261,7 @@ export function Content() {
       {/* outer panel styling and sizing */}
       <div class="oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
         {/* Control buttons and framerate status text */}
-        <div class="oj-flex-item oj-flex-bar" style="max-height:25px;">
+        <div class="oj-flex-item oj-flex-bar oj-md-margin-10x-bottom" style="max-height:25px;">
           <div class="oj-flex-bar-start">
             <div class={weatherStyles} title={weatherStyles}></div>
           </div>
@@ -289,7 +289,7 @@ export function Content() {
         </div>
 
         {/* Parent container for top row of elements */}
-        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column">
+        <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column top-row-alignment">
           {/* Child container for first column of elements: car visualization */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center ">
             {/* Stack elements in this column so that they layout vertically */}
@@ -312,18 +312,21 @@ export function Content() {
             </div>
           </div>
           {/* Center column of elements: Speed gauge */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center center-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item position-center">
                 <oj-status-meter-gauge
-                  class="f1-meter-lg"
+                  class="f1-meter-lg"                
                   min={0}
                   max={350}
+                  size={'fit'}
                   value={speed}
                   startAngle={180}
                   labelledBy="startAngle"
                   angleExtent={180}
+                  color={'#161513'}
+                  borderColor={'#161513'}
                   metricLabel={{
                     style: {
                       color: "#f9f9f6",
@@ -331,6 +334,7 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
+                  plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
                   orientation="circular"
                 ></oj-status-meter-gauge>
               </div>
@@ -338,7 +342,7 @@ export function Content() {
           </div>
 
           {/* Third column of elements: RPM gauge */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
@@ -346,6 +350,7 @@ export function Content() {
                   class="f1-meter-md"
                   min={0}
                   max={15000}
+                  size={"fit"}
                   value={rpm}
                   startAngle={180}
                   labelledBy="startAngle"
@@ -358,6 +363,7 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
+                  plotArea={{color:'#e3dbbf'}}
                   thresholds={thresholdValues}
                   referenceLines={referenceLines}
                   orientation="circular"
@@ -370,7 +376,7 @@ export function Content() {
         {/* Parent container for bottom row of elements */}
         <div class="oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column bottom-row-alignment">
           {/* Child container for first column of elements: Throttle and Brake status text */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          <div class="oj-flex-item oj-flex oj-md-4 oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
             {/* Stack elements in this column so that they layout vertically */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
@@ -397,7 +403,7 @@ export function Content() {
           </div>
 
           {/* Center column of elements: steering animation */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item">
@@ -411,7 +417,7 @@ export function Content() {
           </div>
 
           {/* Third column of elements: Gear gauge */}
-          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing">
+          <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom">
@@ -419,8 +425,11 @@ export function Content() {
                   class="f1-meter-gear"
                   min={0}
                   max={10}
+                  size={"fit"}
                   value={gear}
                   startAngle={180}
+                  color={'#161513'}
+                  borderColor={'#161513'}
                   labelledBy="startAngle"
                   angleExtent={180}
                   metricLabel={{
@@ -431,6 +440,7 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
+                  plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
                   orientation="circular"
                 ></oj-status-meter-gauge>
               </div>
