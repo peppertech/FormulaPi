@@ -12,12 +12,12 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
     const imgPath = "styles/images/car/";
     function Content() {
         /* car behavior states  */
-        const [speed, setSpeed] = hooks_1.useState(0);
-        const [throttle, setThrottle] = hooks_1.useState("");
-        const [brake, setBrake] = hooks_1.useState("");
-        const [gear, setGear] = hooks_1.useState(0);
-        const [rpm, setRPM] = hooks_1.useState(0);
-        const [steer, setSteer] = hooks_1.useState(0);
+        const [speed, setSpeed] = (0, hooks_1.useState)(0);
+        const [throttle, setThrottle] = (0, hooks_1.useState)("");
+        const [brake, setBrake] = (0, hooks_1.useState)("");
+        const [gear, setGear] = (0, hooks_1.useState)(0);
+        const [rpm, setRPM] = (0, hooks_1.useState)(0);
+        const [steer, setSteer] = (0, hooks_1.useState)(0);
         /* session data states
           0 = unknown,
           1 = P1,
@@ -34,11 +34,11 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
           12 = R3,
           13 = Time Trial
         */
-        const [sessionType, setSessionType] = hooks_1.useState(0);
+        const [sessionType, setSessionType] = (0, hooks_1.useState)(0);
         /* Run mode  */
-        const [mode, setMode] = hooks_1.useState("simulator");
+        const [mode, setMode] = (0, hooks_1.useState)("simulator");
         /* Simulator data and config  */
-        const [frameNum, setFrameNum] = hooks_1.useState(0);
+        const [frameNum, setFrameNum] = (0, hooks_1.useState)(0);
         const data = JSON.parse(trackData);
         const frameRate = 40;
         /* Connect to Websocket relay for live data  */
@@ -48,7 +48,7 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                 socket = new WebSocket(wsServiceUrl);
             }
             socket.addEventListener("open", (event) => {
-                () => socket.send("getPacketSessionData");
+                socket.send("getPacketSessionData");
                 timerId = setInterval(() => socket.send("getPacketCarTelemetryData"), 1000 / frameRate);
             });
             /* Listen for data coming from socket request */
@@ -60,10 +60,11 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                 if (jsonData.m_session_type) {
                     setSessionType(jsonData.m_session_type);
                     setweatherStyles({ type: jsonData.m_weather });
+                    console.log('Session Data: ' + JSON.stringify(jsonData));
                 }
                 if (jsonData.m_car_telemetry_data) {
                     carData = jsonData;
-                    console.log(JSON.stringify(carData));
+                    console.log('Car Data: ' + JSON.stringify(carData));
                     if (Object.keys(carData).length !== 0) {
                         setSpeed(carData.m_car_telemetry_data[0].m_speed);
                         setThrottle(carData.m_car_telemetry_data[0].m_throttle);
@@ -120,7 +121,7 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                     clearInterval(dataFlow);
                 }
             };
-            dataFlow = setInterval(throttleDataFlow, 1000 / frameRate); // read the fasteslap data at one 18 frames per second.
+            dataFlow = setInterval(throttleDataFlow, 1000 / frameRate); // read the fastestlap data at one 18 frames per second.
         };
         /* Stop simulator or live connection  */
         const disconnectFromServer = (event) => {
@@ -135,6 +136,10 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
                     socket.close();
                     console.log("Server connection closed");
                 }
+                if (socket.readyState === 3) {
+                    console.log('Server connection was already closed.');
+                }
+                ;
             }
         };
         /* Weather types
@@ -205,13 +210,13 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
             }
         };
         /* Tyre temperature */
-        const [tyreTempFR, setTyreTempFR] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_01.png"); // Front Right
-        const [tyreTempRR, settyreTempRR] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_02.png"); // Rear Right
-        const [tyreTempRL, settyreTempRL] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_03.png"); // Rear Left
-        const [tyreTempFL, setTyreTempFL] = hooks_1.useReducer(defineTyreColor, imgPath + "sand_04.png"); // Front Left
-        const [steeringStyles, setsteeringStyles] = hooks_1.useReducer(getStyles, "steering-size");
-        const [weatherStyles, setweatherStyles] = hooks_1.useReducer(defineWeatherStyle, "weather sunny");
-        hooks_1.useEffect(() => { }, []);
+        const [tyreTempFR, setTyreTempFR] = (0, hooks_1.useReducer)(defineTyreColor, imgPath + "sand_01.png"); // Front Right
+        const [tyreTempRR, settyreTempRR] = (0, hooks_1.useReducer)(defineTyreColor, imgPath + "sand_02.png"); // Rear Right
+        const [tyreTempRL, settyreTempRL] = (0, hooks_1.useReducer)(defineTyreColor, imgPath + "sand_03.png"); // Rear Left
+        const [tyreTempFL, setTyreTempFL] = (0, hooks_1.useReducer)(defineTyreColor, imgPath + "sand_04.png"); // Front Left
+        const [steeringStyles, setsteeringStyles] = (0, hooks_1.useReducer)(getStyles, "steering-size");
+        const [weatherStyles, setweatherStyles] = (0, hooks_1.useReducer)(defineWeatherStyle, "weather sunny");
+        (0, hooks_1.useEffect)(() => { }, []);
         const thresholdValues = [
             { max: 11500, color: "#77b0b8" },
             { max: 13500, color: "#e6cc87" },
@@ -221,78 +226,78 @@ define(["require", "exports", "preact", "preact/hooks", "text!./data/fastestlap.
             { value: 11500, color: "#e6cc87" },
             { value: 13500, color: "#c74634" },
         ];
-        return (preact_1.h("div", { class: "" },
-            preact_1.h("div", { class: "oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber" },
-                preact_1.h("div", { class: "oj-flex-item oj-flex-bar", style: "max-height:25px;" },
-                    preact_1.h("div", { class: "oj-flex-bar-start" },
-                        preact_1.h("div", { class: weatherStyles })),
-                    preact_1.h("div", { class: "oj-flex-bar-end" },
-                        preact_1.h("oj-toolbar", { class: "oj-color-invert" },
-                            preact_1.h("oj-button", { onojAction: runSimulation, chroming: "callToAction" }, "Simulator"),
-                            preact_1.h("oj-button", { onojAction: connectToServer, chroming: "callToAction" }, "Live"),
-                            preact_1.h("oj-button", { onojAction: disconnectFromServer, chroming: "callToAction" }, "Disconnect")))),
-                preact_1.h("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column" },
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center " },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item" },
-                                preact_1.h("img", { src: tyreTempFR, class: "f1-meter-tire" })),
-                            preact_1.h("div", { class: "oj-flex-item" },
-                                preact_1.h("img", { src: tyreTempRL, class: "f1-meter-tire" }))),
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item" },
-                                preact_1.h("img", { src: tyreTempRR, class: "f1-meter-tire" })),
-                            preact_1.h("div", { class: "oj-flex-item" },
-                                preact_1.h("img", { src: tyreTempFL, class: "f1-meter-tire" })))),
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center center-sizing" },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item position-center" },
-                                preact_1.h("oj-status-meter-gauge", { class: "f1-meter-lg", min: 0, max: 350, value: speed, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, metricLabel: {
+        return ((0, preact_1.h)("div", { class: "" },
+            (0, preact_1.h)("div", { class: "oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber" },
+                (0, preact_1.h)("div", { class: "oj-flex-item oj-flex-bar oj-md-margin-10x-bottom", style: "max-height:25px;" },
+                    (0, preact_1.h)("div", { class: "oj-flex-bar-start" },
+                        (0, preact_1.h)("div", { class: weatherStyles, title: weatherStyles })),
+                    (0, preact_1.h)("div", { class: "oj-flex-bar-end" },
+                        (0, preact_1.h)("oj-toolbar", { class: "oj-color-invert" },
+                            (0, preact_1.h)("oj-button", { onojAction: runSimulation, chroming: "callToAction" }, "Simulator"),
+                            (0, preact_1.h)("oj-button", { onojAction: connectToServer, chroming: "callToAction" }, "Live"),
+                            (0, preact_1.h)("oj-button", { onojAction: disconnectFromServer, chroming: "callToAction" }, "Disconnect")))),
+                (0, preact_1.h)("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column top-row-alignment" },
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center " },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                (0, preact_1.h)("img", { src: tyreTempFR, class: "f1-meter-tire" })),
+                            (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                (0, preact_1.h)("img", { src: tyreTempRL, class: "f1-meter-tire" }))),
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                (0, preact_1.h)("img", { src: tyreTempRR, class: "f1-meter-tire" })),
+                            (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                (0, preact_1.h)("img", { src: tyreTempFL, class: "f1-meter-tire" })))),
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center" },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item position-center" },
+                                (0, preact_1.h)("oj-status-meter-gauge", { class: "f1-meter-lg", min: 0, max: 350, size: 'fit', value: speed, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, color: '#161513', borderColor: '#161513', metricLabel: {
                                         style: {
                                             color: "#f9f9f6",
                                             fontSize: "1.2rem",
                                             fontFamily: "sans-comic",
                                         },
-                                    }, orientation: "circular" })))),
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing" },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
-                                preact_1.h("oj-status-meter-gauge", { class: "f1-meter-md", min: 0, max: 15000, value: rpm, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, metricLabel: {
+                                    }, plotArea: { color: '#e3dbbf', borderColor: '#161513' }, orientation: "circular" })))),
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top" },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
+                                (0, preact_1.h)("oj-status-meter-gauge", { class: "f1-meter-md", min: 0, max: 15000, size: "fit", value: rpm, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, metricLabel: {
                                         position: "outsidePlotArea",
                                         style: {
                                             color: "#f9f9f6",
                                             fontSize: "1.2rem",
                                             fontFamily: "sans-comic",
                                         },
-                                    }, thresholds: thresholdValues, referenceLines: referenceLines, orientation: "circular" }))))),
-                preact_1.h("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column bottom-row-alignment" },
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing" },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
-                                preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" },
+                                    }, plotArea: { color: '#e3dbbf' }, thresholds: thresholdValues, referenceLines: referenceLines, orientation: "circular" }))))),
+                (0, preact_1.h)("div", { class: "oj-flex oj-flex-init oj-md-justify-content-space-between oj-sm-only-flex-direction-column bottom-row-alignment" },
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-md-4 oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top" },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
+                                (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                    (0, preact_1.h)("span", { class: "oj-typography-subheading-md oj-color-invert" },
                                         "Throttle",
                                         " "),
-                                    preact_1.h("span", { class: throttle ? "on" : "clear", style: "display:inline-block;width:30px;height:1rem" })),
-                                preact_1.h("div", { class: "oj-flex-item" },
-                                    preact_1.h("span", { class: "oj-typography-subheading-md oj-color-invert" },
+                                    (0, preact_1.h)("span", { class: throttle ? "on" : "clear", style: "display:inline-block;width:30px;height:1rem" })),
+                                (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                    (0, preact_1.h)("span", { class: "oj-typography-subheading-md oj-color-invert" },
                                         "Brake",
                                         " "),
-                                    preact_1.h("span", { class: brake ? "off" : "clear", style: "display:inline-block;width:30px;height:1rem" }))))),
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top center-sizing" },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item" },
-                                preact_1.h("img", { src: "styles/images/sw.png", alt: "steering wheel", class: steeringStyles })))),
-                    preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top side-sizing" },
-                        preact_1.h("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
-                            preact_1.h("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
-                                preact_1.h("oj-status-meter-gauge", { class: "f1-meter-gear", min: 0, max: 10, value: gear, startAngle: 180, labelledBy: "startAngle", angleExtent: 180, metricLabel: {
+                                    (0, preact_1.h)("span", { class: brake ? "off" : "clear", style: "display:inline-block;width:30px;height:1rem" }))))),
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top" },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item" },
+                                (0, preact_1.h)("img", { src: "styles/images/sw.png", alt: "steering wheel", class: steeringStyles })))),
+                    (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top" },
+                        (0, preact_1.h)("div", { class: "oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column" },
+                            (0, preact_1.h)("div", { class: "oj-flex-item oj-sm-margin-4x-bottom oj-md-margin-10x-bottom" },
+                                (0, preact_1.h)("oj-status-meter-gauge", { class: "f1-meter-gear", min: 0, max: 10, size: "fit", value: gear, startAngle: 180, color: '#161513', borderColor: '#161513', labelledBy: "startAngle", angleExtent: 180, metricLabel: {
                                         position: "outsidePlotArea",
                                         style: {
                                             color: "#f9f9f6",
                                             fontSize: "1.2rem",
                                             fontFamily: "sans-comic",
                                         },
-                                    }, orientation: "circular" }))))))));
+                                    }, plotArea: { color: '#e3dbbf', borderColor: '#161513' }, orientation: "circular" }))))))));
     }
     exports.Content = Content;
 });
