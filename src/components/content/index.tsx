@@ -311,35 +311,31 @@ export function Content() {
               </div>
             </div>
           </div>
+
+
           {/* Center column of elements: Speed gauge */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item position-center">
-                <oj-status-meter-gauge
-                  class="f1-meter-lg"                
-                  min={0}
-                  max={350}
-                  size={'fit'}
-                  value={speed}
-                  startAngle={180}
-                  labelledBy="startAngle"
-                  angleExtent={180}
-                  color={'#161513'}
-                  borderColor={'#161513'}
-                  metricLabel={{
-                    style: {
-                      color: "#f9f9f6",
-                      fontSize: "1.2rem",
-                      fontFamily: "sans-comic",
-                    },
-                  }}
-                  plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
-                  orientation="circular"
-                ></oj-status-meter-gauge>
+              <div id="chart-container">
+            <oj-chart
+              id="lineChart"
+              type="line"
+              data={speed}
+              animation-on-display="auto"
+              animation-on-data-change="auto"
+              // orientation="[[orientationValue]]"
+              hover-behavior="dim"
+                // value={speed}
+                group-id="[[ [item.data.quarter] ]]"
+                series-id="[[item.data.series]]">
+            </oj-chart>
               </div>
             </div>
           </div>
+          </div>
+
 
           {/* Third column of elements: RPM gauge */}
           <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-only-margin-6x-top">

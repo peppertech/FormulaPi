@@ -3,6 +3,7 @@ import * as ResponsiveUtils from "ojs/ojresponsiveutils";
 import "ojs/ojtoolbar";
 import "ojs/ojmenu";
 import "ojs/ojbutton";
+import "ojs/ojchart";
 
 type Props = {
   appName: string,
