@@ -39,6 +39,11 @@ html[dir="rtl"] .demo-oracle-icon {
   content: url("images/avatar_24px.png");
 }
 
+.f1-chart-lg {
+  height: 100%;
+  width: 400px;
+}
+/* speed */
 .f1-meter-lg {
   height: 100%;
   width: 100%;

@@ -1,10 +1,13 @@
-import { h } from "preact";
+import { h, ComponentProps } from "preact";
 import { useState, useReducer, useEffect } from "preact/hooks";
 import * as trackData from "text!./data/fastestlap.json";
 import { ojButton } from "ojs/ojbutton";
 import "ojs/ojgauge";
 import "ojs/ojbutton";
 import "ojs/ojtoolbar";
+import "ojs/ojchart";
+import { ojChart } from "ojs/ojchart";
+import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 
 // const wsServiceUrl = "ws://130.61.139.189:8001"; Nacho
 const wsServiceUrl = "ws://130.61.139.189:8001";
@@ -41,7 +44,6 @@ export function Content() {
     13 = Time Trial
   */
   const [sessionType, setSessionType] = useState(0);
-  
 
   /* Run mode  */
   const [mode, setMode] = useState("simulator");
@@ -66,7 +68,7 @@ export function Content() {
     });
 
     /* Listen for data coming from socket request */
-    socket.addEventListener("message", function (event) {
+    socket.addEventListener("message", function(event) {
       let jsonData = JSON.parse(event.data);
       if (typeof jsonData === "string") {
         jsonData = JSON.parse(jsonData);
@@ -74,11 +76,11 @@ export function Content() {
       if (jsonData.m_session_type) {
         setSessionType(jsonData.m_session_type);
         setweatherStyles({ type: jsonData.m_weather });
-        console.log('Session Data: ' + JSON.stringify(jsonData));
-      } 
+        console.log("Session Data: " + JSON.stringify(jsonData));
+      }
       if (jsonData.m_car_telemetry_data) {
         carData = jsonData;
-        console.log('Car Data: '+JSON.stringify(carData));
+        console.log("Car Data: " + JSON.stringify(carData));
         if (Object.keys(carData).length !== 0) {
           setSpeed(carData.m_car_telemetry_data[0].m_speed);
           setThrottle(carData.m_car_telemetry_data[0].m_throttle);
@@ -89,23 +91,23 @@ export function Content() {
           setsteeringStyles({ type: carData.m_car_telemetry_data[0].m_steer });
           if (sessionType != 13) {
             settyreTempRL({
-              type: carData.m_car_telemetry_data[0]
-                .m_tyres_surface_temperature[0],
+              type:
+                carData.m_car_telemetry_data[0].m_tyres_surface_temperature[0],
               location: "03",
             });
             settyreTempRR({
-              type: carData.m_car_telemetry_data[0]
-                .m_tyres_surface_temperature[1],
+              type:
+                carData.m_car_telemetry_data[0].m_tyres_surface_temperature[1],
               location: "02",
             });
             setTyreTempFL({
-              type: carData.m_car_telemetry_data[0]
-                .m_tyres_surface_temperature[2],
+              type:
+                carData.m_car_telemetry_data[0].m_tyres_surface_temperature[2],
               location: "04",
             });
             setTyreTempFR({
-              type: carData.m_car_telemetry_data[0]
-                .m_tyres_surface_temperature[3],
+              type:
+                carData.m_car_telemetry_data[0].m_tyres_surface_temperature[3],
               location: "01",
             });
           }
@@ -150,7 +152,9 @@ export function Content() {
         socket.close();
         console.log("Server connection closed");
       }
-      if(socket.readyState === 3){console.log('Server connection was already closed.')};
+      if (socket.readyState === 3) {
+        console.log("Server connection was already closed.");
+      }
     }
   };
 
@@ -243,7 +247,10 @@ export function Content() {
     "steering-size"
   );
 
-  const [weatherStyles, setweatherStyles] = useReducer(defineWeatherStyle, "weather sunny");
+  const [weatherStyles, setweatherStyles] = useReducer(
+    defineWeatherStyle,
+    "weather sunny"
+  );
 
   useEffect(() => {}, []);
 
@@ -256,12 +263,70 @@ export function Content() {
     { value: 11500, color: "#e6cc87" },
     { value: 13500, color: "#c74634" },
   ];
+
+  // Chart related code
+  type chartItem = {
+    id: number;
+    series: string;
+    group: string;
+    value: number;
+  };
+
+  let chartData = [
+    { id: 100, value: 70, series: "speed", group: "timestamp1" },
+    { id: 101, value: 120, series: "speed", group: "timestamp2" },
+    { id: 101, value: 210, series: "speed", group: "timestamp3" },
+    { id: 101, value: 102, series: "speed", group: "timestamp4" }
+  ];
+  type ChartProps = ComponentProps<"oj-chart">;
+  const xaxisConfig: ChartProps["xAxis"] = {
+    tickLabel: { rotation: "auto", rendered: "on", style: { color: "white" } },
+  };
+  const yaxisConfig: ChartProps["yAxis"] = {
+    tickLabel: { rendered: "on", style: { color: "white" } },
+  };
+
+  const legendConfig: ChartProps["legend"] = {
+    rendered: "off"
+  }
+
+  const dataProvider: MutableArrayDataProvider<
+    chartItem["id"],
+    chartItem
+  > = new MutableArrayDataProvider(chartData, {
+    keyAttributes: "id",
+  });
+
+  /* value:speed group:time series:singular   */
+  const renderChartItem = (
+    item: ojChart.ItemTemplateContext<chartItem["id"], chartItem>
+  ) => {
+    return (
+      <oj-chart-item
+        value={item.data.value}
+        groupId={[item.data.group]}
+        seriesId={item.data.series}
+      ></oj-chart-item>
+    );
+  };
+
+  const renderSeries = (series:ojChart.SeriesTemplateContext<chartItem>) => {
+    return (
+      <oj-chart-series
+        color='orange'
+      ></oj-chart-series>
+    );
+  };
+
   return (
     <div class="">
       {/* outer panel styling and sizing */}
       <div class="oj-flex oj-sm-flex-direction-column oj-flex-align oj-panel oj-panel-shadow-xs oj-bg-neutral-20 f1-dashboard bg-fiber">
         {/* Control buttons and framerate status text */}
-        <div class="oj-flex-item oj-flex-bar oj-md-margin-10x-bottom" style="max-height:25px;">
+        <div
+          class="oj-flex-item oj-flex-bar oj-md-margin-10x-bottom"
+          style="max-height:25px;"
+        >
           <div class="oj-flex-bar-start">
             <div class={weatherStyles} title={weatherStyles}></div>
           </div>
@@ -316,7 +381,30 @@ export function Content() {
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item position-center">
-                <oj-status-meter-gauge
+                <oj-chart
+                  aria-label="sample bar chart"
+                  id="barChart"
+                  type="line"
+                  orientation="vertical"
+                  stack="off"
+                  data={dataProvider}
+                  animationOnDisplay="auto"
+                  animationOnDataChange="auto"
+                  xAxis={xaxisConfig}
+                  yAxis={yaxisConfig}
+                  legend={legendConfig}
+                  class="f1-chart-lg"
+                >
+                  <template
+                    slot="itemTemplate"
+                    render={renderChartItem}
+                  ></template>
+                  <template
+                    slot="seriesTemplate"
+                    render={renderSeries}
+                  ></template>
+                </oj-chart>
+                {/* <oj-status-meter-gauge
                   class="f1-meter-lg"                
                   min={0}
                   max={350}
@@ -336,7 +424,7 @@ export function Content() {
                   }}
                   plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
                   orientation="circular"
-                ></oj-status-meter-gauge>
+                ></oj-status-meter-gauge> */}
               </div>
             </div>
           </div>
@@ -363,7 +451,7 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
-                  plotArea={{color:'#e3dbbf'}}
+                  plotArea={{ color: "#e3dbbf" }}
                   thresholds={thresholdValues}
                   referenceLines={referenceLines}
                   orientation="circular"
@@ -428,8 +516,8 @@ export function Content() {
                   size={"fit"}
                   value={gear}
                   startAngle={180}
-                  color={'#161513'}
-                  borderColor={'#161513'}
+                  color={"#161513"}
+                  borderColor={"#161513"}
                   labelledBy="startAngle"
                   angleExtent={180}
                   metricLabel={{
@@ -440,7 +528,7 @@ export function Content() {
                       fontFamily: "sans-comic",
                     },
                   }}
-                  plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
+                  plotArea={{ color: "#e3dbbf", borderColor: "#161513" }}
                   orientation="circular"
                 ></oj-status-meter-gauge>
               </div>
