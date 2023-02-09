@@ -1,5 +1,5 @@
 import { h, ComponentProps } from "preact";
-import { useState, useReducer, useEffect } from "preact/hooks";
+import { useState, useReducer, useEffect, useRef } from "preact/hooks";
 import * as trackData from "text!./data/fastestlap.json";
 import { ojButton } from "ojs/ojbutton";
 import "ojs/ojgauge";
@@ -44,6 +44,7 @@ export function Content() {
     13 = Time Trial
   */
   const [sessionType, setSessionType] = useState(0);
+  const [speedIndex, setSpeedIndex] = useState(0);
 
   /* Run mode  */
   const [mode, setMode] = useState("simulator");
@@ -111,6 +112,15 @@ export function Content() {
               location: "01",
             });
           }
+
+          speedData.push({
+            id: speedIndex,
+            value: carData.m_car_telemetry_data[0].m_speed,
+            series: "speed",
+            group: speedIndex.toString(),
+          });
+          dataProvider.data = speedData;
+          setSpeedIndex(speedIndex+1);
         }
       }
     });
@@ -132,6 +142,13 @@ export function Content() {
         setRPM(data[flowIndex].M_ENGINERPM);
         setSteer(data[flowIndex].M_STEER);
         setsteeringStyles({ type: data[flowIndex].M_STEER });
+        speedData.push({
+          id: data[flowIndex].M_FRAME,
+          value: data[flowIndex].M_SPEED,
+          series: "speed",
+          group: data[flowIndex].M_FRAME.toString(),
+        });
+        dataProvider.data = speedData;
         flowIndex++;
       } else {
         clearInterval(dataFlow);
@@ -272,12 +289,15 @@ export function Content() {
     value: number;
   };
 
-  let chartData = [
-    { id: 100, value: 70, series: "speed", group: "timestamp1" },
-    { id: 101, value: 120, series: "speed", group: "timestamp2" },
-    { id: 101, value: 210, series: "speed", group: "timestamp3" },
-    { id: 101, value: 102, series: "speed", group: "timestamp4" }
-  ];
+  // let chartData = [
+  //   { id: 100, value: 70, series: "speed", group: "timestamp1" },
+  //   { id: 101, value: 120, series: "speed", group: "timestamp2" },
+  //   { id: 101, value: 210, series: "speed", group: "timestamp3" },
+  //   { id: 101, value: 102, series: "speed", group: "timestamp4" }
+  // ];
+
+  let speedData = [{ id: 100, value: 0, series: "speed", group: "0" }];
+  const [chartData, setChartData] = useState(speedData);
   type ChartProps = ComponentProps<"oj-chart">;
   const xaxisConfig: ChartProps["xAxis"] = {
     tickLabel: { rotation: "auto", rendered: "on", style: { color: "white" } },
@@ -287,14 +307,17 @@ export function Content() {
   };
 
   const legendConfig: ChartProps["legend"] = {
-    rendered: "off"
-  }
+    rendered: "off",
+  };
+  // const [dataProvider, setDataProvider] = useState(new MutableArrayDataProvider(chartData, {
+  //   keyAttributes: "@index",
+  //  }))
 
   const dataProvider: MutableArrayDataProvider<
     chartItem["id"],
     chartItem
   > = new MutableArrayDataProvider(chartData, {
-    keyAttributes: "id",
+    keyAttributes: "@index",
   });
 
   /* value:speed group:time series:singular   */
@@ -310,12 +333,8 @@ export function Content() {
     );
   };
 
-  const renderSeries = (series:ojChart.SeriesTemplateContext<chartItem>) => {
-    return (
-      <oj-chart-series
-        color='orange'
-      ></oj-chart-series>
-    );
+  const renderSeries = (series: ojChart.SeriesTemplateContext<chartItem>) => {
+    return <oj-chart-series color="orange"></oj-chart-series>;
   };
 
   return (

@@ -2,11 +2,12 @@
   "use": "cdn",
   "cdns": {
     "jet": {
-      "prefix": "https://static.oracle.com/cdn/jet/13.0.1/default/js",
-      "css": "https://static.oracle.com/cdn/jet/13.0.1/default/css",
+      "prefix": "https://static.oracle.com/cdn/jet/14.0.2/default/js",
+      "css": "https://static.oracle.com/cdn/jet/14.0.2/default/css",
+      "csspreact": "https://static.oracle.com/cdn/jet/14.0.2/3rdparty/oraclejet-preact/amd",
       "config": "bundles-config.js"
     },
-    "3rdparty": "https://static.oracle.com/cdn/jet/13.0.1/3rdparty"
+    "3rdparty": "https://static.oracle.com/cdn/jet/14.0.2/3rdparty"
   },
   "libs": {
 

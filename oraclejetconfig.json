@@ -21,5 +21,6 @@
   "sassVer": "5.0.0",
   "defaultTheme": "redwood",
   "architecture": "vdom",
-  "generatorVersion": "12.0.0"
+  "generatorVersion": "12.0.0",
+  "watchInterval": 1000
 }
