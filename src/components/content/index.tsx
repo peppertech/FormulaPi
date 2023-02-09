@@ -57,6 +57,7 @@ export function Content() {
   /* Connect to Websocket relay for live data  */
   const connectToServer = () => {
     setMode("live");
+    setSpeedIndex(0);
     if (!socket || socket.readyState !== 1) {
       socket = new WebSocket(wsServiceUrl);
     }
@@ -142,6 +143,7 @@ export function Content() {
         setRPM(data[flowIndex].M_ENGINERPM);
         setSteer(data[flowIndex].M_STEER);
         setsteeringStyles({ type: data[flowIndex].M_STEER });
+        if(flowIndex > 100)speedData.shift();
         speedData.push({
           id: data[flowIndex].M_FRAME,
           value: data[flowIndex].M_SPEED,
@@ -167,10 +169,12 @@ export function Content() {
       if (socket != null && socket.readyState === 1) {
         clearInterval(timerId);
         socket.close();
+        setSpeedIndex(0);
         console.log("Server connection closed");
       }
       if (socket.readyState === 3) {
         console.log("Server connection was already closed.");
+        setSpeedIndex(0);
       }
     }
   };
@@ -301,9 +305,12 @@ export function Content() {
   type ChartProps = ComponentProps<"oj-chart">;
   const xaxisConfig: ChartProps["xAxis"] = {
     tickLabel: { rotation: "auto", rendered: "on", style: { color: "white" } },
+    viewportMin:0
   };
   const yaxisConfig: ChartProps["yAxis"] = {
     tickLabel: { rendered: "on", style: { color: "white" } },
+    max:350,
+    step:20
   };
 
   const legendConfig: ChartProps["legend"] = {
@@ -400,6 +407,7 @@ export function Content() {
             {/* Force the content into a vertical column layout  */}
             <div class="oj-flex-item oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-flex-direction-column">
               <div class="oj-flex-item position-center">
+              <div class="oj-color-invert oj-typography-heading-md" style="text-align:center">{speed}</div>
                 <oj-chart
                   aria-label="sample bar chart"
                   id="barChart"
@@ -423,27 +431,6 @@ export function Content() {
                     render={renderSeries}
                   ></template>
                 </oj-chart>
-                {/* <oj-status-meter-gauge
-                  class="f1-meter-lg"                
-                  min={0}
-                  max={350}
-                  size={'fit'}
-                  value={speed}
-                  startAngle={180}
-                  labelledBy="startAngle"
-                  angleExtent={180}
-                  color={'#161513'}
-                  borderColor={'#161513'}
-                  metricLabel={{
-                    style: {
-                      color: "#f9f9f6",
-                      fontSize: "1.2rem",
-                      fontFamily: "sans-comic",
-                    },
-                  }}
-                  plotArea={{color:'#e3dbbf', borderColor:'#161513'}}
-                  orientation="circular"
-                ></oj-status-meter-gauge> */}
               </div>
             </div>
           </div>
